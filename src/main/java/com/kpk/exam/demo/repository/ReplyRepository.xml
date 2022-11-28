@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kpk.exam.demo.repository.ReplyRepository">
+	
+	<insert id="writeReply">
+		INSERT INTO reply
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId = #{memberId},
+		relTypeCode = #{relTypeCode},
+		relId = #{relId},
+		`body` = #{body}
+	</insert>
+	
+	<select id="getForPrintReplies" resultType="Reply">
+		SELECT R.*, M.nickname AS writer
+		FROM reply AS R
+		LEFT JOIN `member` AS M
+		ON R.memberId = M.id
+		WHERE relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		ORDER BY R.id ASC
+	</select>
+	
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+	
+	<select id="getForPrintReply" resultType="Reply">
+		SELECT R.*, M.nickname AS writer
+		FROM reply AS R
+		LEFT JOIN `member` AS M
+		ON R.memberId = M.id
+		WHERE R.id = #{id}
+	</select>
+	
+	<delete id="deleteReply">
+		DELETE FROM reply
+		WHERE id = #{id}
+	</delete>
+	
+	<update id="modifyReply">
+		UPDATE reply
+		SET updateDate = NOW(),
+		`body` = #{body}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

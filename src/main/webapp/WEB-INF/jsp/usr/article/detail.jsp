@@ -1,0 +1,229 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="pageTitle" value="${board.name} 상세"/>
+<%@ include file="../common/head.jspf" %>
+<%@ include file="../common/toastUiEditorLib.jspf" %>
+
+<script>
+	const params = {};
+	params.id = parseInt('${param.id}');
+</script>
+
+<script>
+	// 조회수 관련
+	function ArticleDetail__increaseHitCount(){
+		const localStorageKey = 'article__' + params.id + '__alreadyView';
+		
+		if(localStorage.getItem(localStorageKey)){
+			return;
+		}
+		localStorage.setItem(localStorageKey, true);
+		
+		$.get('../article/doIncreaseHitCountRd', {
+			id : params.id,
+			ajaxMode : 'Y',
+		}, function(data) {
+			$('.article-detail__hit-count').empty().html(data.data1);
+		}, 'json');
+	}
+	
+	ArticleDetail__increaseHitCount();
+	
+	$(function(){
+		setTimeout(ArticleDetail__increaseHitCount(), 2000);
+	});
+</script>
+
+<script type="text/javascript">
+	// 댓글 관련
+	let ReplyWrite__submitFormDone = false;
+	function ReplyWrite__submitForm(form) {
+		if(ReplyWrite__submitFormDone){
+			alert('처리중 입니다.');
+			return;
+		}
+		
+		form.body.value = form.body.value.trim();
+		
+		if(form.body.value == 0){
+			alert('내용을 입력해주세요.');
+			form.body.focus();
+			return;
+		}
+		
+		form.submit();
+		
+		ReplyWrite__submitFormDone = true;
+	}
+</script>
+
+<section class="mt-8">
+	<div class="container mx-auto px-3 text-xl">
+		<div class="table-box-type-1">
+			<table class="table w-full">
+				<tbody>
+					<tr>
+						<td>
+							<div class="text-4xl">${article.title }</div>
+							<div class="mt-3 flex justify-between">
+								<div>
+									<span class="mr-3">${article.writer }</span>
+									<span>${article.regDate }</span>
+								</div>
+								
+								<div>
+									<span class="badge article-detail__hit-count">조회수 ${article.hitCount }</span>
+									<span class="badge">추천수 ${article.goodReactionPoint }</span>
+									<c:if test="${board.id == 2}">
+										<span class="badge">답변수 ${article.extra__answerCount }</span>
+									</c:if>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="toast-ui-viewer">
+								<script type="text/x-template">${article.getForPrintBody() }</script>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="text-center">
+							<c:if test="${actorCanMakeReaction }">
+								<span>&nbsp;</span>
+								<a href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri}" 
+								class="btn btn-outline btn-sm">좋아요 👍</a>
+								<span>&nbsp;</span>
+								<a href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri}" 
+								class="btn btn-outline btn-sm">싫어요 👎</a>
+							</c:if>
+							<c:if test="${actorCanCancelGoodReaction }">
+								<span>&nbsp;</span>
+								<a href="/usr/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri}"  
+								class="btn btn-primary btn-sm">좋아요 👍</a>
+								<span>&nbsp;</span>
+								<a onclick="alert(this.title); return false;" title="좋아요를 먼저 취소해주세요." href="#"
+								class="btn btn-outline btn-sm">싫어요 👎</a>	
+							</c:if>
+							<c:if test="${actorCanCancelBadReaction }">
+								<span>&nbsp;</span>
+								<a onclick="alert(this.title); return false;" title="싫어요를 먼저 취소해주세요." href="#" 
+								class="btn btn-outline btn-sm">좋아요 👍</a>
+								<span>&nbsp;</span>
+								<a href="/usr/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri}" 
+								class="btn btn-primary btn-sm">싫어요 👎</a>	
+							</c:if>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+
+<section class="mt-5">
+	<div class="container mx-auto px-3 py-3 border">
+		<h2>댓글 <span class="text-red-500">${replies.size() }</span>개</h2>
+		<table class="table w-full mt-3 reply-table">
+			<tbody>
+				<c:forEach var="reply" items="${replies }" varStatus="status">
+					<tr class="hover">
+						<td class="flex justify-between">
+							<div class="flex content-center items-center">
+								<span class="mr-20">${reply.writer }</span>
+								<span>${reply.getForPrintBody()}</span>
+							</div>
+							<div>
+								<span>${reply.regDate }</span>
+								<c:if test="${reply.extra__actorCanModify}">
+									<a class="btn btn-ghost btn-xs" href="../reply/modify?id=${reply.id }&replaceUri=${rq.encodedCurrentUri }">수정</a>
+								</c:if>
+								<c:if test="${reply.extra__actorCanDelete}">
+									<a class="btn btn-ghost btn-xs" onclick="if(confirm('삭제 하시겠습니까?') == false) return false;" href="../reply/doDelete?id=${reply.id }&replaceUri=${rq.encodedCurrentUri }">삭제</a>
+								</c:if>
+							</div>
+						</td>
+					</tr>					
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+</section>
+
+
+<section class="mt-5">
+	<div class="container mx-auto px-3 py-3 border">
+<!-- 		<h2>댓글 작성</h2> -->
+		<c:if test="${rq.logined }">
+			<form class="table-box-type-1" method="post" action="../reply/doWrite" onsubmit="ReplyWrite__submitForm(this); return false;">
+				<input type="hidden" name="relTypeCode" value="article" />
+				<input type="hidden" name="relId" value="${article.id }" />
+				<input type="hidden" name="replaceUri" value="${rq.currentUri }"/>
+				<table class="table w-full mt-3 reply-writer">
+					<colgroup>
+						<col width="120"/>
+						<col />
+					</colgroup>
+					<tbody>
+						<tr>
+							<td>${rq.loginedMember.nickname }</td>
+							<td class="flex">
+								<textarea class="w-full textarea textarea-bordered" name="body" placeholder="댓글을 입력해주세요." rows="3"></textarea>
+								<button class="btn btn-accent" type="submit">댓글작성</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</c:if>
+		<c:if test="${rq.notLogined }">
+			댓글 작성은 <a class="btn btn-primary" href="${rq.loginUri }">로그인</a> 후 이용해주세요.
+		</c:if>
+	</div>
+</section>
+
+<section class="mt-5">
+	<div class="container mx-auto px-3">
+		<div class="btns mt-3">
+			<c:if test="${empty param.listUri}">
+				<button class="btn btn-warning" type="button" onclick="history.back();">뒤로가기</button>			
+			</c:if>
+			<c:if test="${not empty param.listUri}">
+				<a class="btn btn-warning" href="${param.listUri }">뒤로가기</a>			
+			</c:if>
+			<c:if test="${article.extra__actorCanModify }">
+				<a class="btn btn-accent"  href="../article/modify?id=${article.id }">수정</a>
+			</c:if>
+			<c:if test="${article.extra__actorCanDelete }">
+				<a class="btn btn-error" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../article/doDelete?id=${article.id }">삭제</a>
+			</c:if>
+		</div>
+	</div>
+</section>
+
+<c:if test="${board.id == 2}">
+<section class="mt-5">
+	<div class="container mx-auto mb-10">
+		<h2>답변 <span class="text-red-500">${article.extra__answerCount }</span>개</h2>
+		<table class="table w-full mt-3 answer-table">
+			<tbody>
+				<c:forEach var="answer" items="${answers }" varStatus="status">
+					<tr>
+						<td>
+							<div class="mt-3 flex justify-between">
+								<span class="mr-3 text-xl">${answer.writer }</span>
+								<span>${answer.regDate }</span>
+							</div>
+							<div class="toast-ui-viewer">
+								<script type="text/x-template">${answer.getForPrintBody() }</script>
+							</div>
+						</td>
+					</tr>					
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+</section>
+</c:if>
+<%@ include file="../common/foot.jspf" %>

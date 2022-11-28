@@ -1,0 +1,194 @@
+:root {
+	--primary: #1B1A17;
+	--active: #F0A500;
+	--accent: #E45826;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+html>body, html>body .toast-ui-editor, html>body .toastui-editor-contents, html>body .ProseMirror, html>body .toastui-editor-md-mode {
+	font-family: 'Noto Sans KR', sans-serif;
+	text-underline-position: under;
+}
+
+/*라이브러리*/
+.table-box-type-1 > table {
+	width: 100%;
+}
+
+.table-box-type-1 > table.list th, .table-box-type-1 > table.list td{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 10px;
+	text-align: center;
+}
+.table-box-type-1 > table td.title > a{
+	color: #4B7BE5;
+}
+
+.btn-text-link {
+	color: grey;
+}
+
+.btn-text-link:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+.bg-primary {
+	background-color: var(--primary);
+	color: #fff;
+}
+
+/* 커스텀 */
+body {
+	min-width:800px;
+}
+
+.Popup {
+	font-size:3rem;
+}
+
+.layer {
+	display:none;
+	width:500px;
+	height:500px;
+	background-color: black;
+	color:white;
+	border:10px solid gold;
+	padding: 10px;
+	position:absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index:11;
+}
+
+.layer > button {
+	position:absolute;
+	bottom: 20px;
+	right: 20px;
+}
+
+.layer-bg {
+	display: none;
+	width:100%;
+	height:100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.close-btn {
+	border: 5px solid white;
+	border-radius: 5px;
+	padding:10px;
+}
+
+/* 메뉴 바 커스텀 */
+header {
+	position:fixed;
+	background-color: var(--primary);
+	right:-100%;
+	z-index:9999;
+	transition: right 0.5s;
+	width:300px;
+}
+header ul {
+	padding: 20px;
+}
+
+header ul li {
+	color:white;
+	border: 1px solid white;
+	border-radius: 5px;
+}
+
+header ul li:hover,
+header ul li.active {
+	border: none;
+	background-color: var(--active);
+	border: 1px solid var(--active);
+}
+
+header ul li .close-menu{
+	cursor:pointer;
+}
+
+.menu-btn {
+	position: fixed;
+	top: 1.5rem;
+	right: 1.5rem;
+}
+
+.back-board {
+	position: fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index:9000;
+	display:none;
+}
+
+.back-board.active {
+	display:block;
+}
+
+.breadcrumbs {
+	background-color: var(--primary);
+	color:#fff;
+	border-radius: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.user-tab {
+	border:1px solid var(--primary);
+	border-radius: 5px;
+	padding-top:0.5rem;
+	padding-bottom:0.5rem;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+/* 메뉴 바 커스텀 */
+
+
+/* 메인 화면 */
+.main-box {
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+
+/* 댓글 테이블 */
+.reply-table td {
+	padding: 0;
+	padding-left: 1rem;
+	padding-top:0.25rem;
+	padding-bottom:0.25rem;
+}
+
+/* 댓글 작성 */
+.reply-writer {
+	border-top: 1px solid #E3E6E8;
+	border-bottom: 1px solid #E3E6E8;
+}
+
+.reply-writer td {
+	padding-right:0.25rem;
+}
+
+.reply-writer button {
+	height: auto;
+}
+
+/* 답변 테이블 */
+.answer-table {
+	border-top: 1px solid #E3E6E8;
+	border-bottom: 1px solid #E3E6E8;
+}
+
