@@ -57,6 +57,33 @@
 	}
 </script>
 
+<script type="text/javascript">
+	// 답변 관련
+	let AnswerWrite__submitFormDone = false;
+	function AnswerWrite__submitForm(form) {
+		if(AnswerWrite__submitFormDone){
+			alert('처리중 입니다.');
+			return;
+		}
+		
+		const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+		const markdown = editor.getMarkdown().trim();
+				
+		if(markdown.length == 0){
+			alert('내용을 입력해주세요.');
+			editor.focus();
+			
+			return;
+		}
+		
+		form.body.value = markdown;
+		
+		form.submit();
+		
+		AnswerWrite__submitFormDone = true;
+	}
+</script>
+
 <section class="mt-8">
 	<div class="container mx-auto px-3 text-xl">
 		<div class="table-box-type-1">
@@ -212,7 +239,12 @@
 					<tr>
 						<td>
 							<div class="mt-3 flex justify-between">
-								<span class="mr-3 text-xl">${answer.writer }</span>
+								<span class="mr-3 text-xl">
+									${answer.writer }
+									<c:if test="${answer.choiceStatus == 1 }">
+										<span class="badge badge-success">채택됨</span>
+									</c:if>
+								</span>
 								<span>${answer.regDate }</span>
 							</div>
 							<div class="toast-ui-viewer">
@@ -224,6 +256,36 @@
 			</tbody>
 		</table>
 	</div>
+	
+	<c:if test="${rq.logined }">
+		<div class="container mx-auto mb-10">
+			<p class="text-3xl">답변 작성</p>
+			<form class="table-box-type-1" method="post" action="../answer/doWrite" onsubmit="AnswerWrite__submitForm(this); return false;">
+				<input type="hidden" name="relTypeCode" value="article" />
+				<input type="hidden" name="relId" value="${article.id }" />
+				<input type="hidden" name="replaceUri" value="${rq.currentUri }"/>
+				<table class="table w-full mt-3">
+					<tbody>
+						<tr>
+							<td>
+								<div class="toast-ui-editor">
+									<script type="text/x-template"></script>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div>
+					<button class="btn btn-accent btn-block" type="submit">답변작성</button>
+				</div>
+			</form>
+		</div>
+	</c:if>
+	<c:if test="${rq.notLogined }">
+		<div class="container mx-auto mb-10">
+			답변 작성은 <a class="btn btn-primary" href="${rq.loginUri }">로그인</a> 후 이용해주세요.
+		</div>
+	</c:if>
 </section>
 </c:if>
 <%@ include file="../common/foot.jspf" %>

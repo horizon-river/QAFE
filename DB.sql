@@ -1,7 +1,7 @@
 # DB 생성
-DROP DATABASE IF EXISTS SB_AM;
-CREATE DATABASE SB_AM;
-USE SB_AM;
+DROP DATABASE IF EXISTS QAFE;
+CREATE DATABASE QAFE;
+USE QAFE;
 
 # 게시물 테이블 생성
 CREATE TABLE article(
@@ -93,7 +93,7 @@ CREATE TABLE board(
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-    `code` CHAR(50) NOT NULL UNIQUE COMMENT 'notice(공지사항), free1(자유게시판1), free2(자유게시판2),..',
+    `code` CHAR(50) NOT NULL UNIQUE COMMENT 'notice(공지사항), question(Q&A),..',
     `name` CHAR(50) NOT NULL UNIQUE COMMENT '게시판 이름',
     delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제여부 (0=삭제 전,1=삭제 후)',
     delDate DATETIME COMMENT '삭제날짜'
@@ -109,21 +109,21 @@ updateDate = NOW(),
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
-`code` = 'free1',
-`name` = '자유';
+`code` = 'question',
+`name` = 'Q&A';
 
 # 게시물 테이블에 boardId 추가
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
 
-# 1,2 번 게시물을 공지사항 게시물로 수정
+# 1 번 게시물을 공지사항 게시물로 수정
 UPDATE article
 SET boardId = 1
-WHERE id IN (1,2);
+WHERE id IN (1);
 
-# 3 번 게시물을 자유게시판 게시물로 수정
+# 2,3 번 게시물을 질문 게시물로 수정
 UPDATE article
 SET boardId = 2
-WHERE id IN (3);
+WHERE id IN (2,3);
 
 # 게시물 테이블에 hitCount 추가
 ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
@@ -202,7 +202,7 @@ INNER JOIN (
 ) AS RP_SUM
 ON A.id = RP_SUM.relId
 SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
-A.badReactionPoint = RP_SUM.badReactionPoint
+A.badReactionPoint = RP_SUM.badReactionPoint;
 
 # 댓글 테이블
 CREATE TABLE reply (
@@ -252,7 +252,7 @@ relId = 3,
 ALTER TABLE reply ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
 # 댓글 테이블에 badReactionPoint 칼럼 추가
-ALTER TABLE reply ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;`reply`
+ALTER TABLE reply ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
 # 댓글 테이블에 인덱스 걸기
 ALTER TABLE `SB_AM`.`reply` ADD INDEX (`relTypeCode` , `relId`);
@@ -280,13 +280,53 @@ ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
 # attr에 만료날짜 추가
 ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
 
-
 # 회원 테이블의 로그인 비밀번호의 길이를 100으로 늘림
 ALTER TABLE `member` MODIFY COLUMN loginPw VARCHAR(100) NOT NULL;
 
 # 기존 회원의 비밀번호를 암호화 
 UPDATE `member`
 SET loginPw = SHA2(loginPw, 256);
+
+# 게시물 테이블의 내용을 text 타입으로 변경
+ALTER TABLE article MODIFY COLUMN `body` TEXT NOT NULL;
+
+# 답변 테이블
+CREATE TABLE answer (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    relTypeCode CHAR(30) NOT NULL COMMENT '관련데이터타입코드',
+    relId INT(10) UNSIGNED NOT NULL COMMENT '관련데이터번호',
+    `body` TEXT NOT NULL,
+    goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0,
+    badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0
+);
+
+# answer 테스트 데이터
+INSERT INTO answer
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 3,
+`body` = '답변 테스트1';
+
+INSERT INTO answer
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 3,
+`body` = '답변 테스트2';
+
+INSERT INTO answer
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 2,
+`body` = '답변 테스트3';
 
 #####################################################
 
@@ -300,7 +340,23 @@ SELECT * FROM board;
 
 SELECT * FROM reply;
 
+SELECT * FROM answer;
+
+SELECT * FROM attr;
+
 SELECT LAST_INSERT_ID();
+
+SELECT A.*, M.nickname AS writer
+FROM
+(SELECT ans.*
+FROM answer AS ans
+LEFT JOIN article AS art
+ON ans.relId = art.id
+WHERE relTypeCode = 'article'
+AND relId = 3) AS A
+LEFT JOIN `member` AS M
+ON A.memberId = M.id;
+
 
 /*
 # 게시물 늘리기

@@ -25,6 +25,7 @@ public class Article {
 	private boolean extra__actorCanModify;
 	
 	private int extra__answerCount;
+	private int extra__choiceStatus;
 	
 	public String getForPrintType1RegDate() {
 		return regDate.substring(2,16).replace(" ", "<br />");

@@ -51,7 +51,12 @@
 						<c:forEach var="article" items="${articles }">
 							<tr class="hover">
 								<td>${article.id }</td>
-								<td class="title"><a class="hover:underline" href="${rq.getArticleDetailUriFromArticleList(article) }">${article.title }</a></td>
+								<td class="title">
+									<a class="hover:underline" href="${rq.getArticleDetailUriFromArticleList(article) }">${article.title }</a>
+									<c:if test="${article.extra__choiceStatus == 1 }">
+										<span class="badge badge-success">채택됨</span>
+									</c:if>
+								</td>
 								<td>${article.forPrintType1RegDate }</td>
 								<td>${article.writer }</td>
 								<td>${article.hitCount }</td>

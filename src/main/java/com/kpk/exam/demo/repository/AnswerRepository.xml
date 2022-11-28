@@ -24,7 +24,8 @@
 		WHERE relTypeCode = #{relTypeCode}
 		AND relId = #{relId}) AS A
 		LEFT JOIN `member` AS M
-		ON A.memberId = M.id;
+		ON A.memberId = M.id
+		ORDER BY choiceStatus DESC;
 	</select>
 	
 	<select id="getLastInsertId" resultType="int">

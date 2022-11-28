@@ -15,6 +15,7 @@ public class Answer {
 	private String relTypeCode;
 	private int relId;
 	private String body;
+	private int choiceStatus;
 	private int goodReactionPoint;
 	private int badReactionPoint;
 	

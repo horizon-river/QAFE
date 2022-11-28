@@ -15,7 +15,9 @@
 	</insert>
 	
 	<select id="getForPrintArticle" resultType="Article">
-		SELECT A.*, M.nickname AS writer, (SELECT COUNT(*) FROM answer WHERE A.id = answer.relId) AS extra__answerCount
+		SELECT A.*, M.nickname AS writer, 
+		(SELECT COUNT(*) FROM answer WHERE A.id = answer.relId) AS extra__answerCount,
+		IFNULL((SELECT choiceStatus FROM answer WHERE A.id = answer.relId AND answer.choiceStatus = 1), 0) AS extra__choiceStatus
 		FROM article AS A
 		LEFT JOIN `member` AS M
 		ON A.memberId = M.id
@@ -23,7 +25,9 @@
 	</select>
 	
 	<select id="getArticles" resultType="Article">
-	    SELECT A.*, M.nickname as writer, (SELECT COUNT(*) FROM answer WHERE A.id = answer.relId) AS extra__answerCount
+	    SELECT A.*, M.nickname as writer, 
+	    (SELECT COUNT(*) FROM answer WHERE A.id = answer.relId) AS extra__answerCount,
+		IFNULL((SELECT choiceStatus FROM answer WHERE A.id = answer.relId AND answer.choiceStatus = 1), 0) AS extra__choiceStatus
 		FROM article AS A
 		LEFT JOIN `member` AS M
 		ON A.memberId = M.id
