@@ -176,6 +176,10 @@ public class UsrArticleController {
 		
 		model.addAttribute("answers", answers);
 		
+		boolean actorCanWriteAnswer = answerService.getActorCanWriteAnswer(rq.getLoginedMemberId(),"article", id);
+		
+		model.addAttribute("actorCanWriteAnswer", actorCanWriteAnswer);
+		
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);

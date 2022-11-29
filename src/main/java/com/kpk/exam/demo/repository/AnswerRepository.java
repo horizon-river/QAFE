@@ -14,5 +14,7 @@ public interface AnswerRepository {
 	List<Answer> getAnswers(String relTypeCode, int relId);
 
 	int getLastInsertId();
+
+	int getActorCanWriteAnswer(int loginedMemberId, String relTypeCode, int relId);
 	
 }

@@ -28,6 +28,14 @@
 		ORDER BY choiceStatus DESC;
 	</select>
 	
+	<select id="getActorCanWriteAnswer" resultType="int">
+		SELECT COUNT(*)
+		FROM answer
+		WHERE memberId = #{loginedMemberId}
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+	</select>
+	
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>

@@ -229,7 +229,7 @@
 	</div>
 </section>
 
-<c:if test="${board.id == 2}">
+<c:if test="${board.id == 2 && article.extra__actorCanModify == false}">
 <section class="mt-5">
 	<div class="container mx-auto mb-10">
 		<h2>답변 <span class="text-red-500">${article.extra__answerCount }</span>개</h2>
@@ -247,8 +247,16 @@
 								</span>
 								<span>${answer.regDate }</span>
 							</div>
-							<div class="toast-ui-viewer">
+							<div class="toast-ui-viewer mt-5 mb-10">
 								<script type="text/x-template">${answer.getForPrintBody() }</script>
+							</div>
+							<div class="text-right">
+								<c:if test="${answer.extra__actorCanModify }">
+									<a class="btn btn-accent"  href="../answer/modify?id=${answer.id }">수정</a>
+								</c:if>
+								<c:if test="${answer.extra__actorCanDelete }">
+									<a class="btn btn-error" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../answer/doDelete?id=${answer.id }">삭제</a>
+								</c:if>
 							</div>
 						</td>
 					</tr>					
@@ -257,10 +265,11 @@
 		</table>
 	</div>
 	
-	<c:if test="${rq.logined }">
+	<c:if test="${rq.logined && actorCanWriteAnswer}">
 		<div class="container mx-auto mb-10">
 			<p class="text-3xl">답변 작성</p>
 			<form class="table-box-type-1" method="post" action="../answer/doWrite" onsubmit="AnswerWrite__submitForm(this); return false;">
+				<input type="hidden" name="body" />
 				<input type="hidden" name="relTypeCode" value="article" />
 				<input type="hidden" name="relId" value="${article.id }" />
 				<input type="hidden" name="replaceUri" value="${rq.currentUri }"/>
