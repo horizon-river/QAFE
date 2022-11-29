@@ -54,7 +54,7 @@ public class UsrReplyController {
 	}
 	
 	@RequestMapping("/usr/reply/modify")
-	public String doWrite(Model model, int id) {
+	public String modify(Model model, int id) {
 
 		if (Ut.empty(id)) {
 			return rq.jsHistoryBack("id가 없습니다.");

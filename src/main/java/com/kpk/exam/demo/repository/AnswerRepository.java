@@ -16,5 +16,11 @@ public interface AnswerRepository {
 	int getLastInsertId();
 
 	int getActorCanWriteAnswer(int loginedMemberId, String relTypeCode, int relId);
+
+	Answer getAnswer(int id);
+
+	void modifyAnswer(int id, String body);
+
+	void deleteAnswer(int id);
 	
 }

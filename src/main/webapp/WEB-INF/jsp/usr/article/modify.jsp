@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="ARTICLE MODIFY"/>
+<c:set var="pageTitle" value="게시물 수정"/>
 <%@ include file="../common/head.jspf" %>
 <%@ include file="../common/toastUiEditorLib.jspf" %>
 
@@ -8,42 +8,38 @@
 		<div class="container mx-auto px-3 text-xl">
 			<form class="table-box-type-1" method="post" action="../article/doModify" onsubmit="ArticleModify__submit(this); return false;">
 				<input type="hidden" name="body" />
-				<table class="table table-zebra w-full">
+				<table class="table w-full">
 					<tbody>
 						<tr>
-							<th>번호</th>
-							<td><input name="id" type="hidden" value="${article.id }"/><div class="badge badge-lg">${article.id }</div></td>
-						</tr>
-						<tr>
-							<th>작성날짜</th>
-							<td>${article.regDate }</td>
-						</tr>
-						<tr>
-							<th>수정날짜</th>
-							<td>${article.updateDate }</td>
-						</tr>
-						<tr>
-							<th>조회수</th>
-							<td>
-								<span class="badge article-detail__hit-count">${article.hitCount }</span>
+							<td class="flex justify-between">
+								<div>
+									번호 : <input name="id" type="hidden" value="${article.id }"/><div class="badge badge-lg">${article.id }</div>
+								</div>
+								<div>
+									<span class="badge">작성날짜 : ${article.regDate }</span>
+									<span class="badge">수정날짜 : ${article.updateDate }</span>
+								</div>
+								<div>
+									<span class="badge">조회수 ${article.hitCount }</span>
+									<span class="badge">추천 ${article.goodReactionPoint }</span>
+								</div>
 							</td>
 						</tr>
 						<tr>
-							<th>작성자</th>
-							<td>${article.writer }</td>
-						</tr>
-						<tr>
-							<th>추천</th>
 							<td>
-								<span class="badge">${article.goodReactionPoint }</span>
+								<div class="form-control">
+								  <label class="input-group">
+								    <span class="bg-primary">게시판 구분</span>
+								    <input disabled type="text" value="Q&A" class="input input-bordered w-full" autocomplete="off" />
+								  </label>
+								</div>
 							</td>
 						</tr>
 						<tr>
-							<th>제목</th>
-							<td><input class="input input-bordered w-full" name="title" type="text" placeholder="제목을 입력해주세요." value="${article.title}" /></td>
+							<td><input required="required" type="text" value="${article.title }"  
+							class="input input-bordered input-ghost w-full" name="title" placeholder="제목을 입력해주세요."/></td>
 						</tr>
 						<tr>
-							<th>내용</th>
 							<td>
 								<div class="toast-ui-editor">
 									<script type="text/x-template">${article.body}</script>
@@ -51,8 +47,10 @@
 							</td>
 						</tr>
 						<tr>
-							<th></th>
-							<td><button class="btn btn-success" type="submit">수정</button></td>
+							<td class="flex justify-between">
+								<button class="btn" type="button" onclick="history.back();">취소</button>
+								<button class="btn" type="submit">수정</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>

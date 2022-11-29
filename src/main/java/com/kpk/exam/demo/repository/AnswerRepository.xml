@@ -13,6 +13,24 @@
 		relId = #{relId},
 		`body` = #{body}
 	</insert>
+	
+	<update id="modifyAnswer">
+		UPDATE answer
+		SET updateDate = NOW(),
+		`body` = #{body}
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteAnswer">
+		DELETE FROM answer
+		WHERE id = #{id}
+	</delete>
+	
+	<select id="getAnswer" resultType="Answer">
+		SELECT *
+		FROM answer
+		WHERE id = #{id}
+	</select>
 		
 	<select id="getAnswers" resultType="Answer">
 		SELECT A.*, M.nickname AS writer

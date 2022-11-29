@@ -51,7 +51,7 @@ public class AnswerService {
 
 	private ResultData actorCanModify(Member actor, Answer answer) {
 		if (answer == null) {
-			return ResultData.from("F-1", "답변이 존재하지 않습니다");
+			return ResultData.from("F-1", "답변이 존재하지 않습니다.");
 		}
 		
 		if (answer.getMemberId() != actor.getId()) {
@@ -62,7 +62,7 @@ public class AnswerService {
 
 	private ResultData actorCanDelete(Member actor, Answer answer) {
 		if (answer == null) {
-			return ResultData.from("F-1", "답변이 존재하지 않습니다");
+			return ResultData.from("F-1", "답변이 존재하지 않습니다.");
 		}
 		
 		if (answer.getMemberId() != actor.getId()) {
@@ -74,6 +74,26 @@ public class AnswerService {
 	public boolean getActorCanWriteAnswer(int loginedMemberId, String relTypeCode, int relId) {
 		
 		return answerRepository.getActorCanWriteAnswer(loginedMemberId, relTypeCode, relId) == 0;
+	}
+
+	public Answer getAnswer(Member actor, int id) {
+		Answer answer = answerRepository.getAnswer(id);
+		
+		updateForPrintData(actor, answer);
+		
+		return answer;
+	}
+
+	public ResultData modifyAnswer(int id, String body) {
+		answerRepository.modifyAnswer(id, body);
+		
+		return ResultData.from("S-1", "답변을 수정했습니다.");
+	}
+
+	public ResultData deleteAnswer(int id) {
+		answerRepository.deleteAnswer(id);
+		
+		return ResultData.from("S-1", "답변을 삭제했습니다.");
 	}
 	
 }
