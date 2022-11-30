@@ -64,4 +64,17 @@
 		SELECT LAST_INSERT_ID()
 	</select>
 	
+	<select id="getAnswerCountByMemberId" resultType="int">
+		SELECT COUNT(*)
+		FROM answer
+		WHERE memberId = #{loginedMemberId}
+	</select>
+	
+	<select id="getChoicedAnswerCountByMemberId" resultType="int">
+		SELECT COUNT(*)
+		FROM answer
+		WHERE memberId = #{loginedMemberId}
+		AND choiceStatus = 1
+	</select>
+	
 </mapper>

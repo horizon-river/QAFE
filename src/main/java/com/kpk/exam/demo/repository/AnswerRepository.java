@@ -24,5 +24,9 @@ public interface AnswerRepository {
 	void deleteAnswer(int id);
 
 	void choiceAnswer(int id);
+
+	int getAnswerCountByMemberId(int loginedMemberId);
+
+	int getChoicedAnswerCountByMemberId(int loginedMemberId);
 	
 }

@@ -101,5 +101,13 @@ public class AnswerService {
 		
 		return ResultData.from("S-1", "답변을 채택했습니다.");
 	}
+
+	public int getAnswerCountByMemberId(int loginedMemberId) {
+		return answerRepository.getAnswerCountByMemberId(loginedMemberId);
+	}
+	
+	public int getChoicedAnswerCountByMemberId(int loginedMemberId) {
+		return answerRepository.getChoicedAnswerCountByMemberId(loginedMemberId);
+	}
 	
 }

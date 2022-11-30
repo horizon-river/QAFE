@@ -23,6 +23,26 @@
 						<td>
 							<div class="form-control">
 							  <label class="input-group">
+							    <span class="bg-primary">총 답변 수</span>
+							    <input name="loginId" value="${answerCount}" disabled type="text" class="input input-bordered w-full" autocomplete="off"/>
+							  </label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="form-control">
+							  <label class="input-group">
+							    <span class="bg-primary">채택된 답변 수</span>
+							    <input name="loginId" value="${choicedAnswerCount}" disabled type="text" class="input input-bordered w-full" autocomplete="off"/>
+							  </label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="form-control">
+							  <label class="input-group">
 							    <span class="bg-primary">아이디</span>
 							    <input name="loginId" value="${rq.loginedMember.loginId }" disabled type="text" class="input input-bordered w-full" autocomplete="off"/>
 							  </label>

@@ -2,10 +2,12 @@ package com.kpk.exam.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kpk.exam.demo.service.AnswerService;
 import com.kpk.exam.demo.service.MemberService;
 import com.kpk.exam.demo.util.Ut;
 import com.kpk.exam.demo.vo.Member;
@@ -19,6 +21,8 @@ public class UsrMemberController {
 	private MemberService memberService;
 	@Autowired
 	private Rq rq;
+	@Autowired
+	private AnswerService answerService;
 	
 	// 액션 메서드
 	@RequestMapping("/usr/member/join")
@@ -133,7 +137,15 @@ public class UsrMemberController {
 	}
 	
 	@RequestMapping("usr/member/myPage")
-	public String showMyPage() {
+	public String showMyPage(Model model) {
+		int answerCount = answerService.getAnswerCountByMemberId(rq.getLoginedMemberId());
+		
+		model.addAttribute("answerCount", answerCount);
+		
+		int choicedAnswerCount = answerService.getChoicedAnswerCountByMemberId(rq.getLoginedMemberId());
+		
+		model.addAttribute("choicedAnswerCount", choicedAnswerCount);
+		
 		return "usr/member/myPage";
 	}
 
