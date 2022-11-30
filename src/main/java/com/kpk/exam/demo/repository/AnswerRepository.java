@@ -22,5 +22,7 @@ public interface AnswerRepository {
 	void modifyAnswer(int id, String body);
 
 	void deleteAnswer(int id);
+
+	void choiceAnswer(int id);
 	
 }

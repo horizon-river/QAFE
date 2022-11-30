@@ -91,7 +91,11 @@
 				<tbody>
 					<tr>
 						<td>
-							<div class="text-4xl">${article.title }</div>
+							<div class="text-4xl">
+								${article.title } 
+								<c:if test="${article.extra__choiceStatus == 1 }">
+									<span class="badge badge-success">채택됨</span>
+								</c:if></div>
 							<div class="mt-3 flex justify-between">
 								<div>
 									<span class="mr-3">${article.writer }</span>
@@ -211,7 +215,7 @@
 </section>
 
 <section class="mt-5">
-	<div class="container mx-auto px-3">
+	<div class="container mx-auto">
 		<div class="btns mt-3">
 			<c:if test="${empty param.listUri}">
 				<button class="btn btn-warning" type="button" onclick="history.back();">뒤로가기</button>			
@@ -219,17 +223,20 @@
 			<c:if test="${not empty param.listUri}">
 				<a class="btn btn-warning" href="${param.listUri }">뒤로가기</a>			
 			</c:if>
-			<c:if test="${article.extra__actorCanModify }">
+			<c:if test="${article.extra__actorCanModify && article.extra__choiceStatus == 0}">
 				<a class="btn btn-accent"  href="../article/modify?id=${article.id }">수정</a>
 			</c:if>
-			<c:if test="${article.extra__actorCanDelete }">
+			<c:if test="${article.extra__actorCanDelete && article.extra__choiceStatus == 0}">
 				<a class="btn btn-error" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../article/doDelete?id=${article.id }">삭제</a>
+			</c:if>
+			<c:if test="${article.extra__actorCanModify && article.extra__choiceStatus == 1}">
+				<span class="mx-5 text-red-500 underline">채택된 게시물은 수정 및 삭제가 불가능합니다.</span>
 			</c:if>
 		</div>
 	</div>
 </section>
 
-<c:if test="${board.id == 2 && article.extra__actorCanModify == false}">
+<c:if test="${board.id == 2}">
 <section class="mt-5">
 	<div class="container mx-auto mb-10">
 		<h2>답변 <span class="text-red-500">${article.extra__answerCount }</span>개</h2>
@@ -243,6 +250,11 @@
 									${answer.writer }
 									<c:if test="${answer.choiceStatus == 1 }">
 										<span class="badge badge-success">채택됨</span>
+									</c:if>
+									<c:if test="${article.extra__actorCanModify && article.extra__choiceStatus == 0}">
+										<a class="badge" href="../answer/doChoice?id=${answer.id }" 
+										onclick="if(confirm('이 답변을 채택 하시겠습니까?') == false) return false;" 
+										>답변채택</a>
 									</c:if>
 								</span>
 								<span>${answer.regDate }</span>
@@ -265,7 +277,7 @@
 		</table>
 	</div>
 	
-	<c:if test="${rq.logined && actorCanWriteAnswer}">
+	<c:if test="${rq.logined && actorCanWriteAnswer && article.extra__actorCanModify == false && article.extra__choiceStatus == 0}">
 		<div class="container mx-auto mb-10">
 			<p class="text-3xl">답변 작성</p>
 			<form class="table-box-type-1" method="post" action="../answer/doWrite" onsubmit="AnswerWrite__submitForm(this); return false;">

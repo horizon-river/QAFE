@@ -26,6 +26,12 @@
 		WHERE id = #{id}
 	</delete>
 	
+	<update id="choiceAnswer">
+		UPDATE answer
+		SET choiceStatus = 1
+		WHERE id = #{id}
+	</update>
+	
 	<select id="getAnswer" resultType="Answer">
 		SELECT *
 		FROM answer

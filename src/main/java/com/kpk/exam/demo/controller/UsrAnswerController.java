@@ -40,6 +40,12 @@ public class UsrAnswerController {
 			return rq.jsHistoryBack("내용을 입력해주세요");
 		}
 		
+		Answer answer = answerService.getAnswer(rq.getLoginedMember(), relId);
+		
+		if(!Ut.empty(answer)) {
+			return rq.jsHistoryBack("중복 작성 요청입니다. 수정 기능을 사용해주세요.");
+		}
+		
 		ResultData writeAnswerRd = answerService.writeAnswer(rq.getLoginedMemberId(), relTypeCode, relId, body);
 		
 		if (Ut.empty(replaceUri)) {
@@ -99,11 +105,11 @@ public class UsrAnswerController {
 		Answer answer = answerService.getAnswer(rq.getLoginedMember(), id);
 
 		if (answer == null) {
-			return rq.jsHistoryBack(Ut.f("%d번 댓글은 존재하지 않습니다.", id));
+			return rq.jsHistoryBack(Ut.f("%d번 답변은 존재하지 않습니다.", id));
 		}
 
 		if (answer.isExtra__actorCanModify() == false) {
-			return rq.jsHistoryBack("해당 댓글을 수정할 권한이 없습니다.");
+			return rq.jsHistoryBack("해당 답변을 수정할 권한이 없습니다.");
 		}
 		
 		ResultData modifyAnswerRd = answerService.modifyAnswer(id, body);
@@ -130,11 +136,11 @@ public class UsrAnswerController {
 		Answer answer = answerService.getAnswer(rq.getLoginedMember(), id);
 
 		if (answer == null) {
-			return rq.jsHistoryBack(Ut.f("%d번 댓글은 존재하지 않습니다.", id));
+			return rq.jsHistoryBack(Ut.f("%d번 답변은 존재하지 않습니다.", id));
 		}
 
 		if (answer.isExtra__actorCanDelete() == false) {
-			return rq.jsHistoryBack("해당 댓글을 삭제할 권한이 없습니다.");
+			return rq.jsHistoryBack("해당 답변을 삭제할 권한이 없습니다.");
 		}
 		
 		ResultData deleteAnswerRd = answerService.deleteAnswer(id);
@@ -148,5 +154,31 @@ public class UsrAnswerController {
 		}
 		
 		return rq.jsReplace(deleteAnswerRd.getMsg(), replaceUri);
+	}
+	
+	@RequestMapping("/usr/answer/doChoice")
+	@ResponseBody
+	public String doChoice(int id, String replaceUri){
+		if (Ut.empty(id)) {
+			return rq.jsHistoryBack("id가 없습니다.");
+		}
+		
+		Answer answer = answerService.getAnswer(rq.getLoginedMember(), id);
+
+		if (answer == null) {
+			return rq.jsHistoryBack(Ut.f("%d번 답변은 존재하지 않습니다.", id));
+		}
+		
+		ResultData choiceAnswerRd = answerService.choiceAnswer(id);
+		
+		if (Ut.empty(replaceUri)) {
+			switch (answer.getRelTypeCode()) {
+			case "article":
+				replaceUri = Ut.f("../article/detail?id=%d", answer.getRelId());
+				break;
+			}
+		}
+		
+		return rq.jsReplace(choiceAnswerRd.getMsg(), replaceUri);
 	}
 }

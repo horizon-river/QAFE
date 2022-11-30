@@ -95,5 +95,11 @@ public class AnswerService {
 		
 		return ResultData.from("S-1", "답변을 삭제했습니다.");
 	}
+
+	public ResultData choiceAnswer(int id) {
+		answerRepository.choiceAnswer(id);
+		
+		return ResultData.from("S-1", "답변을 채택했습니다.");
+	}
 	
 }
