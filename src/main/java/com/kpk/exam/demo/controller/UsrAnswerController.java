@@ -169,6 +169,12 @@ public class UsrAnswerController {
 			return rq.jsHistoryBack(Ut.f("%d번 답변은 존재하지 않습니다.", id));
 		}
 		
+		Article article = articleService.getArticle(answer.getRelId());
+		
+		if (article.getExtra__choiceStatus() == 1) {
+			return rq.jsHistoryBack(Ut.f("%d번 글은 이미 채택된 상태입니다.", answer.getRelId()));
+		}
+		
 		ResultData choiceAnswerRd = answerService.choiceAnswer(id);
 		
 		if (Ut.empty(replaceUri)) {

@@ -115,7 +115,7 @@
 					<tr>
 						<td>
 							<div class="toast-ui-viewer">
-								<script type="text/x-template">${article.getForPrintBody() }</script>
+								<script type="text/x-template">${article.body }</script>
 							</div>
 						</td>
 					</tr>
@@ -260,7 +260,7 @@
 								<span>${answer.regDate }</span>
 							</div>
 							<div class="toast-ui-viewer mt-5 mb-10">
-								<script type="text/x-template">${answer.getForPrintBody() }</script>
+								<script type="text/x-template">${answer.body }</script>
 							</div>
 							<div class="text-right">
 								<c:if test="${answer.extra__actorCanModify }">
