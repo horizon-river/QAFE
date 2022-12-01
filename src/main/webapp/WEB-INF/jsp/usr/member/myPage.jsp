@@ -5,7 +5,7 @@
 <%@ page import="com.kpk.exam.demo.util.Ut" %>
 
 <section class="mt-8">
-	<div class="container mx-auto px-3 text-xl">
+	<div class="container mx-auto text-xl">
 		<div class="table-box-type-1">
 			<table class="table w-full">
 				<tbody>

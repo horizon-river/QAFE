@@ -5,7 +5,7 @@
 <%@ include file="../common/toastUiEditorLib.jspf" %>
 
 	<section class="mt-8">
-		<div class="container mx-auto px-3 text-xl">
+		<div class="container mx-auto text-xl">
 			<form class="table-box-type-1" method="post" action="../article/doModify" onsubmit="ArticleModify__submit(this); return false;">
 				<input type="hidden" name="body" />
 				<table class="table w-full">

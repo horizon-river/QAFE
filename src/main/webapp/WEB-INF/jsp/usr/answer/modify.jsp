@@ -18,7 +18,7 @@
 									<p class="text-2xl">${article.title }</p>
 								</div>
 								<div class="toast-ui-viewer">
-									<script type="text/x-template">${article.getForPrintBody() }</script>
+									<script type="text/x-template">${article.body }</script>
 								</div>
 							</td>
 						</tr>

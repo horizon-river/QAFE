@@ -40,7 +40,7 @@
 </script>
 
 <section class="mt-8">
-	<div class="container mx-auto px-3 text-xl">
+	<div class="container mx-auto text-xl">
 		<form onsubmit="submitWriteForm(this); return false;" class="table-box-type-1" method="post" action="../article/doWrite">
 		<input type="hidden" name="body" />
 	    <input name="boardId" value="2" readonly type="hidden" class="input input-bordered w-full" autocomplete="off"/>

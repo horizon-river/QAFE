@@ -28,7 +28,7 @@
 </script>
 
 <section class="mt-8 text-xl">
-	<div class="container mx-auto px-3">
+	<div class="container mx-auto">
 		<form class="table-box-type-1" method="POST" action="../member/doFindLoginPw"
 			onsubmit="MemberFindLoginPw__submit(this) ; return false;"
 		>

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.kpk.exam.demo.repository.ReplyRepository;
 import com.kpk.exam.demo.util.Ut;
-import com.kpk.exam.demo.vo.Article;
 import com.kpk.exam.demo.vo.Member;
 import com.kpk.exam.demo.vo.Reply;
 import com.kpk.exam.demo.vo.ResultData;

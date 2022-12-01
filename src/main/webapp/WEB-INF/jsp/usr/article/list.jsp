@@ -4,7 +4,7 @@
 <%@ include file="../common/head.jspf" %>
 
 	<section class="mt-8">
-		<div class="container mx-auto px-3 text-xl">
+		<div class="container mx-auto text-xl">
 			<div class="flex">
 				<div>게시물 갯수 : <span class="badge">${articlesCount } 개</span></div>
 				<div class="flex-grow"></div>

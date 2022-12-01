@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.kpk.exam.demo.service.MemberService;
 import com.kpk.exam.demo.vo.Rq;
 
 @Component

@@ -8,7 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 
 <section class="mt-8">
-	<div class="container mx-auto px-3 text-xl">
+	<div class="container mx-auto text-xl">
 		<form onsubmit="submitJoinForm(this); return false;" class="table-box-type-1" method="post" action="../member/doJoin">
 		<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri }" />
 			<div class="table-box-type-1">

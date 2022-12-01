@@ -85,7 +85,7 @@
 </script>
 
 <section class="mt-8">
-	<div class="container mx-auto px-3 text-xl">
+	<div class="container mx-auto text-xl">
 		<div class="table-box-type-1">
 			<table class="table w-full">
 				<tbody>
@@ -99,11 +99,19 @@
 							<div class="mt-3 flex justify-between">
 								<div>
 									<span class="mr-3">${article.writer }</span>
-									<span>${article.regDate }</span>
+									<span>
+										<c:if test="${article.regDate != article.updateDate}">
+											${article.updateDate }
+											<span class="badge">수정됨</span>
+										</c:if>
+										<c:if test="${article.regDate == article.updateDate}">
+											${article.regDate }
+										</c:if>
+									</span>
 								</div>
 								
 								<div>
-									<span class="badge article-detail__hit-count">조회수 ${article.hitCount }</span>
+									<span class="badge">조회수&nbsp;<span class="article-detail__hit-count"> ${article.hitCount }</span></span>
 									<span class="badge">추천수 ${article.goodReactionPoint }</span>
 									<c:if test="${board.id == 2}">
 										<span class="badge">답변수 ${article.extra__answerCount }</span>
@@ -154,7 +162,29 @@
 </section>
 
 <section class="mt-5">
-	<div class="container mx-auto px-3 py-3 border">
+	<div class="container mx-auto">
+		<div class="btns mt-3 text-right">
+			<c:if test="${article.extra__actorCanModify && article.extra__choiceStatus == 1}">
+				<span class="mx-5 text-red-500 underline">채택된 게시물은 수정 및 삭제가 불가능합니다.</span>
+			</c:if>
+			<c:if test="${empty param.listUri}">
+				<button class="btn btn-warning" type="button" onclick="history.back();">뒤로가기</button>			
+			</c:if>
+			<c:if test="${not empty param.listUri}">
+				<a class="btn btn-warning" href="${param.listUri }">뒤로가기</a>			
+			</c:if>
+			<c:if test="${article.extra__actorCanModify && article.extra__choiceStatus == 0}">
+				<a class="btn btn-accent"  href="../article/modify?id=${article.id }">수정</a>
+			</c:if>
+			<c:if test="${article.extra__actorCanDelete && article.extra__choiceStatus == 0}">
+				<a class="btn btn-error" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../article/doDelete?id=${article.id }">삭제</a>
+			</c:if>
+		</div>
+	</div>
+</section>
+
+<section class="mt-5">
+	<div class="container mx-auto py-3 reply-wrap">
 		<h2>댓글 <span class="text-red-500">${replies.size() }</span>개</h2>
 		<table class="table w-full mt-3 reply-table">
 			<tbody>
@@ -182,9 +212,8 @@
 	</div>
 </section>
 
-
 <section class="mt-5">
-	<div class="container mx-auto px-3 py-3 border">
+	<div class="container mx-auto py-3">
 <!-- 		<h2>댓글 작성</h2> -->
 		<c:if test="${rq.logined }">
 			<form class="table-box-type-1" method="post" action="../reply/doWrite" onsubmit="ReplyWrite__submitForm(this); return false;">
@@ -209,30 +238,8 @@
 			</form>
 		</c:if>
 		<c:if test="${rq.notLogined }">
-			댓글 작성은 <a class="btn btn-primary" href="${rq.loginUri }">로그인</a> 후 이용해주세요.
+			<p>댓글 작성은 <a class="btn btn-primary" href="${rq.loginUri }">로그인</a> 후 이용해주세요.</p>
 		</c:if>
-	</div>
-</section>
-
-<section class="mt-5">
-	<div class="container mx-auto">
-		<div class="btns mt-3">
-			<c:if test="${empty param.listUri}">
-				<button class="btn btn-warning" type="button" onclick="history.back();">뒤로가기</button>			
-			</c:if>
-			<c:if test="${not empty param.listUri}">
-				<a class="btn btn-warning" href="${param.listUri }">뒤로가기</a>			
-			</c:if>
-			<c:if test="${article.extra__actorCanModify && article.extra__choiceStatus == 0}">
-				<a class="btn btn-accent"  href="../article/modify?id=${article.id }">수정</a>
-			</c:if>
-			<c:if test="${article.extra__actorCanDelete && article.extra__choiceStatus == 0}">
-				<a class="btn btn-error" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../article/doDelete?id=${article.id }">삭제</a>
-			</c:if>
-			<c:if test="${article.extra__actorCanModify && article.extra__choiceStatus == 1}">
-				<span class="mx-5 text-red-500 underline">채택된 게시물은 수정 및 삭제가 불가능합니다.</span>
-			</c:if>
-		</div>
 	</div>
 </section>
 
@@ -257,7 +264,15 @@
 										>답변채택</a>
 									</c:if>
 								</span>
-								<span>${answer.regDate }</span>
+								<span>
+									<c:if test="${answer.regDate != answer.updateDate}">
+										${answer.updateDate }
+										<span class="badge">수정됨</span>
+									</c:if>
+									<c:if test="${answer.regDate == answer.updateDate}">
+										${answer.regDate }
+									</c:if>
+								</span>
 							</div>
 							<div class="toast-ui-viewer mt-5 mb-10">
 								<script type="text/x-template">${answer.body }</script>

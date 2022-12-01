@@ -4,7 +4,7 @@
 <%@ include file="../common/head.jspf" %>
 
 	<section class="mt-8">
-		<div class="container mx-auto px-3 text-xl">
+		<div class="container mx-auto text-xl">
 			<form class="table-box-type-1" method="post" action="../member/doLogin">
 			<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri }" />
 				<table class="table w-full">
@@ -31,7 +31,10 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="flex justify-end"><button class="btn btn-accent" type="submit">로그인</button></td>
+							<td class="flex justify-end">
+								<a class="btn mr-1" href="${rq.joinUri }">회원가입</a> 
+								<button class="btn btn-accent" type="submit">로그인</button>
+							</td>
 						</tr>
 						<tr>
 							<td class="flex justify-between">

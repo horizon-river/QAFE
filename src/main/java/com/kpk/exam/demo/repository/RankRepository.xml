@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kpk.exam.demo.repository.RankRepository">
+	<select id="getTotalAnswerRank" resultType="Rank">
+		SELECT M.nickname, COUNT(*) AS resultCount
+		FROM answer AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId = M.id
+		GROUP BY memberId
+		ORDER BY resultCount DESC, memberId ASC;
+	</select>
+	
+	<select id="getTotalQuestionRank" resultType="Rank">
+		SELECT M.nickname, COUNT(*) AS resultCount
+		FROM article AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId = M.id
+		WHERE A.boardId = 2
+		GROUP BY A.memberId
+		ORDER BY resultCount DESC, memberId ASC;
+	</select>
+	
+	<select id="getTotalChoicedAnswerRank" resultType="Rank">
+		SELECT M.nickname, COUNT(*) AS resultCount
+		FROM answer AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId = M.id
+		WHERE choiceStatus = 1
+		GROUP BY memberId
+		ORDER BY resultCount DESC, memberId ASC;
+	</select>
+	
+	<select id="getTotalChoicedMemberRank" resultType="Rank">
+		SELECT M.nickname, COUNT(*) AS resultCount
+		FROM article AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId = M.id
+		WHERE A.id IN (SELECT relId
+		FROM answer
+		WHERE choiceStatus = 1)
+		GROUP BY A.memberId
+		ORDER BY resultCount DESC, A.memberId ASC;
+	</select>
+	
+</mapper>

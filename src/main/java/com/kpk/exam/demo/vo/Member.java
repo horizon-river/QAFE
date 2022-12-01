@@ -20,4 +20,8 @@ public class Member {
 	private String email;
 	private boolean delStatus;
 	private String delDate;
+	
+	public boolean isAdmin() {
+		return this.authLevel == 7;
+	}
 }
