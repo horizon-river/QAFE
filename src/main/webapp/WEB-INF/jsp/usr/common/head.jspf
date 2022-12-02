@@ -23,70 +23,73 @@
 <script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
-	
 	<header>
 		<div class="h-screen flex container mx-auto text-3xl flex-col">
 			<a href="/" class="flex justify-center px-3 border-b border-white p-4 text-white">
 				<span>QAFE</span>
 			</a>
 			<ul class="flex flex-col">
-				<li class="flex">
+				<li class="flex" tag="main">
 					<a class="px-3 py-2 flex-grow" href="/">
 						<span>메인</span>
 					</a>
 				</li>
-				<li class="mt-3 flex">
+				<li class="mt-3 flex" tag="QA">
 					<a class="px-3 py-2 flex-grow"  href="/usr/article/list?boardId=2">
 						<span>Q&amp;A</span>
 					</a>
 				</li>
-				<li class="mt-3 flex">
+				<li class="mt-3 flex" tag="rank">
 					<a class="px-3 py-2 flex-grow"  href="../rank/list">
 						<span>랭킹</span>
 					</a>
 				</li>
-				<li class="mt-3 flex">
+				<li class="mt-3 flex" tag="write">
 					<a class="px-3 py-2 flex-grow"  href="../article/write">
 						<span>글쓰기</span>
 					</a>
 				</li>
-				<li class="mt-3 flex">
+				<li class="mt-3 flex" tag="notice">
 					<a class="px-3 py-2 flex-grow"  href="/usr/article/list?boardId=1">
 						<span>공지사항</span>
 					</a>
 				</li>
-				<c:if test="${rq.loginedMember.authLevel == 7}">
-					<li class="mt-3">
+				<c:if test="${rq.loginedMember.isAdmin()}">
+					<li class="mt-3 flex">
 						<a class="px-3 py-2 flex-grow"  href="/usr/admin/home">
 							<span>ADMIN</span>
 						</a>
 					</li>
 				</c:if>
-				<li class="mt-3 flex">
-					<c:if test="${rq.isLogined()}">
-						<a class="px-3 py-2 flex-grow"  href="/usr/member/myPage">
-							<span>마이페이지</span>
-						</a>						
-					</c:if>
-					<c:if test="${!rq.isLogined()}">
+				<c:if test="${rq.isLogined()}">
+				<li class="mt-3 flex" tag="myPage"> 
+					<a class="px-3 py-2 flex-grow"  href="/usr/member/myPage">
+						<span>마이페이지</span>
+					</a>
+				</li>						
+				</c:if>
+				<c:if test="${!rq.isLogined()}">
+					<li class="mt-3 flex" tag="join">
 						<a class="px-3 py-2 flex-grow"  href="${rq.joinUri }">
 							<span>회원가입</span>
 						</a>						
-					</c:if>
-				</li>
-				<li class="mt-3 flex">
-					<c:if test="${!rq.isLogined()}">
+					</li>
+				</c:if>
+				<c:if test="${!rq.isLogined()}">
+					<li class="mt-3 flex" tag="login">
 						<a class="px-3 py-2 flex-grow"  href="${rq.loginUri}">
 							<span>로그인</span>
-						</a>						
-					</c:if>
-					<c:if test="${rq.isLogined()}">
+						</a>
+					</li>						
+				</c:if>
+				<c:if test="${rq.isLogined()}">
+					<li class="mt-3 flex" tag="logout">
 						<a class="px-3 py-2 flex-grow"  href="${rq.logoutUri }">
 							<span>로그아웃</span>
 						</a>						
-					</c:if>
-				</li>
-				<li class="mt-3 flex self-end">
+					</li>
+				</c:if>
+				<li class="mt-3 flex self-end" tag="close">
 					<div class="px-3 py-2 flex-grow close-menu">
 						메뉴 닫기
 					</div>

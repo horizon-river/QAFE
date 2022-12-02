@@ -328,6 +328,9 @@ relTypeCode = 'article',
 relId = 2,
 `body` = '답변 테스트3';
 
+# 답변 테이블에 채택여부를 추가
+ALTER TABLE answer ADD COLUMN choiceStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '채택여부 (0=채택안됨,1=채택됨)' AFTER `body`;
+
 #####################################################
 
 SELECT * FROM reactionPoint;

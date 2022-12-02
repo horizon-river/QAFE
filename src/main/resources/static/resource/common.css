@@ -192,3 +192,7 @@ header ul li .close-menu{
 	border-bottom: 1px solid #E3E6E8;
 }
 
+/* 랭킹 페이지 */
+.rank-wrap table {
+	text-align:center;
+}
