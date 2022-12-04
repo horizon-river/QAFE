@@ -40,12 +40,6 @@ public class UsrAnswerController {
 			return rq.jsHistoryBack("내용을 입력해주세요");
 		}
 		
-		Answer answer = answerService.getAnswer(rq.getLoginedMember(), relId);
-		
-		if(!Ut.empty(answer)) {
-			return rq.jsHistoryBack("중복 작성 요청입니다. 수정 기능을 사용해주세요.");
-		}
-		
 		ResultData writeAnswerRd = answerService.writeAnswer(rq.getLoginedMemberId(), relTypeCode, relId, body);
 		
 		if (Ut.empty(replaceUri)) {
@@ -79,7 +73,7 @@ public class UsrAnswerController {
 		Article relArticle = null;
 		switch (answer.getRelTypeCode()) {
 		case "article":
-			Article article = articleService.getArticle(answer.getRelId());
+			Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), answer.getRelId());
 			relArticle = article;
 			break;
 		}
@@ -169,10 +163,10 @@ public class UsrAnswerController {
 			return rq.jsHistoryBack(Ut.f("%d번 답변은 존재하지 않습니다.", id));
 		}
 		
-		Article article = articleService.getArticle(answer.getRelId());
+		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), answer.getRelId());
 		
 		if (article.getExtra__choiceStatus() == 1) {
-			return rq.jsHistoryBack(Ut.f("%d번 글은 이미 채택된 상태입니다.", answer.getRelId()));
+			return rq.jsReplace(Ut.f("%d번 글은 이미 채택된 상태입니다.", answer.getRelId()), Ut.f("../article/detail?id=%d", answer.getRelId()));
 		}
 		
 		ResultData choiceAnswerRd = answerService.choiceAnswer(id);

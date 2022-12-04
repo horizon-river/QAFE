@@ -1,67 +1,73 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="REPLY MODIFY"/>
+<c:set var="pageTitle" value="댓글 수정"/>
 <%@ include file="../common/head.jspf" %>
+<%@ include file="../common/toastUiEditorLib.jspf" %>
 
 	<section class="mt-8">
-		<div class="container mx-auto px-3 text-xl">
+		<div class="container mx-auto text-xl">
 			<form class="table-box-type-1" method="post" action="../reply/doModify" onsubmit="ReplyModify__submit(this); return false;">
 			<input name="id" type="hidden" value="${reply.id }"/>
 			<input type="hidden" name="replaceUri" value="${param.replaceUri }"/>
-				<table class="table table-zebra w-full">
+				<table class="table w-full">
 					<tbody>
 						<tr>
-							<th>게시물 번호</th>
 							<td>
-								<div class="badge badge-lg">${reply.relId }</div>
+								<div>
+									<p class="text-4xl">${related.title }</p>
+								</div>
+								<div class="mt-3 flex justify-between">
+									<div>
+										<span class="mr-3">${related.writer }</span>
+										<span>
+											<c:if test="${related.regDate != related.updateDate}">
+												${related.updateDate }
+												<span class="badge">수정됨</span>
+											</c:if>
+											<c:if test="${related.regDate == related.updateDate}">
+												${related.regDate }
+											</c:if>
+										</span>
+									</div>
+									
+									<div>
+										<span class="badge">조회수&nbsp;<span class="article-detail__hit-count"> ${related.hitCount }</span></span>
+										<span class="badge">추천수 ${related.goodReactionPoint }</span>
+										<c:if test="${board.id == 2}">
+											<span class="badge">답변수 ${related.extra__answerCount }</span>
+										</c:if>
+									</div>
+								</div>
 							</td>
 						</tr>
 						<tr>
-							<th>게시물 제목</th>
 							<td>
-								<div class="badge badge-lg">${relDataTitle }</div>
+								<div class="toast-ui-viewer">
+									<script type="text/x-template">${related.body }</script>
+								</div>
 							</td>
 						</tr>
 						<tr>
-							<th>번호</th>
-							<td><div class="badge badge-lg">${reply.id }</div></td>
-						</tr>
-						<tr>
-							<th>작성날짜</th>
-							<td>${reply.regDate }</td>
-						</tr>
-						<tr>
-							<th>수정날짜</th>
-							<td>${reply.updateDate }</td>
-						</tr>
-						<tr>
-							<th>작성자</th>
-							<td>${reply.writer }</td>
-						</tr>
-						<tr>
-							<th>추천</th>
-							<td>
-								<span class="badge">${reply.goodReactionPoint }</span>
+							<td class="text-right">
+								<span class="badge">작성날짜 : ${reply.regDate }</span>
+								<span class="badge">수정날짜 : ${reply.updateDate }</span>
 							</td>
 						</tr>
 						<tr>
-							<th>내용</th>
 							<td>
 								<textarea class="w-full textarea textarea-bordered" name="body" placeholder="내용을 입력해주세요.">${reply.body}</textarea>
 							</td>
 						</tr>
 						<tr>
-							<th></th>
-							<td><button class="btn btn-success" type="submit">수정</button></td>
+							<td class="flex justify-between">
+								<button class="btn" type="button" onclick="history.back();">취소</button>
+								<button class="btn" type="submit">수정</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 				
 			</form>
-			
-			<div class="btns mt-3">
-				<a class="btn btn-warning" href="${param.replaceUri }">뒤로가기</a>
-			</div>
 		</div>
 	</section>
 	

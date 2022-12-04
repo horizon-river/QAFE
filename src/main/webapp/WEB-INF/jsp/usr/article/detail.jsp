@@ -192,17 +192,17 @@
 					<tr class="hover">
 						<td class="flex justify-between">
 							<div class="flex content-center items-center">
-								<span class="mr-20">${reply.writer }</span>
+								<span class="w-40">${reply.writer }</span>
 								<span>${reply.getForPrintBody()}</span>
 							</div>
 							<div>
-								<span>${reply.regDate }</span>
 								<c:if test="${reply.extra__actorCanModify}">
 									<a class="btn btn-ghost btn-xs" href="../reply/modify?id=${reply.id }&replaceUri=${rq.encodedCurrentUri }">수정</a>
 								</c:if>
 								<c:if test="${reply.extra__actorCanDelete}">
 									<a class="btn btn-ghost btn-xs" onclick="if(confirm('삭제 하시겠습니까?') == false) return false;" href="../reply/doDelete?id=${reply.id }&replaceUri=${rq.encodedCurrentUri }">삭제</a>
 								</c:if>
+								${reply.regDate }
 							</div>
 						</td>
 					</tr>					
@@ -212,7 +212,7 @@
 	</div>
 </section>
 
-<section class="mt-5">
+<section>
 	<div class="container mx-auto py-3">
 <!-- 		<h2>댓글 작성</h2> -->
 		<c:if test="${rq.logined }">
@@ -244,7 +244,7 @@
 </section>
 
 <c:if test="${board.id == 2}">
-<section class="mt-5">
+<section class="mt-10">
 	<div class="container mx-auto mb-10">
 		<h2>답변 <span class="text-red-500">${article.extra__answerCount }</span>개</h2>
 		<table class="table w-full mt-3 answer-table">

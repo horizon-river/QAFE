@@ -56,10 +56,6 @@
 				</table>
 				
 			</form>
-			
-			<div class="btns mt-3">
-				<button class="btn btn-warning" type="button" onclick="history.back();">뒤로가기</button>
-			</div>
 		</div>
 	</section>
 	

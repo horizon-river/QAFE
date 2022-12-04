@@ -92,7 +92,7 @@ header {
 	background-color: var(--primary);
 	right:-100%;
 	z-index:9999;
-	transition: right 0.5s;
+	transition: right 0.3s;
 	width:300px;
 }
 header ul {
@@ -110,6 +110,7 @@ header ul li.active {
 	border: none;
 	background-color: var(--active);
 	border: 1px solid var(--active);
+	color:var(--primary)
 }
 
 header ul li .close-menu{
@@ -133,6 +134,7 @@ header ul li .close-menu{
 }
 
 .back-board.active {
+	background-color: rgba(0,0,0,0.3);
 	display:block;
 }
 
@@ -165,11 +167,11 @@ header ul li .close-menu{
 }
 
 /* 댓글 테이블 */
+
 .reply-table td {
-	padding: 0;
-	padding-left: 1rem;
-	padding-top:0.25rem;
-	padding-bottom:0.25rem;
+	border-radius:0;
+	padding: 0.5rem 1rem;
+	border-bottom: 1px solid #E3E6E8;
 }
 
 /* 댓글 작성 */
@@ -192,3 +194,16 @@ header ul li .close-menu{
 	border-bottom: 1px solid #E3E6E8;
 }
 
+/* 랭킹 페이지 */
+.rank-wrap table {
+	text-align:center;
+}
+
+.rank-wrap table thead > tr > td {
+	background-color: var(--primary);
+	color: #FFF;
+}
+
+.rank-wrap table tbody > tr:first-child > td {
+	color:var(--accent);
+}

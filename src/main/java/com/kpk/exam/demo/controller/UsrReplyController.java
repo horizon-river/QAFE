@@ -24,6 +24,7 @@ public class UsrReplyController {
 	@Autowired
 	private Rq rq;
 	
+	// 댓글 작성
 	@RequestMapping("/usr/reply/doWrite")
 	@ResponseBody
 	public String doWrite(String relTypeCode, int relId, String replaceUri, String body) {
@@ -53,6 +54,7 @@ public class UsrReplyController {
 		return rq.jsReplace(writeReplyRd.getMsg(), replaceUri);
 	}
 	
+	// 댓글 수정 페이지
 	@RequestMapping("/usr/reply/modify")
 	public String modify(Model model, int id) {
 
@@ -71,19 +73,23 @@ public class UsrReplyController {
 		}
 		
 		String relDataTitle = null;
+		Object related = null;
 		switch (reply.getRelTypeCode()) {
 		case "article":
-			Article article = articleService.getArticle(reply.getRelId());
+			Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), reply.getRelId());
+			related = article;
 			relDataTitle = article.getTitle();
 			break;
 		}
 		
+		model.addAttribute("related", related);
 		model.addAttribute("relDataTitle", relDataTitle);
 		model.addAttribute("reply", reply);
 		
 		return "usr/reply/modify";
 	}
 	
+	// 댓글 수정
 	@RequestMapping("/usr/reply/doModify")
 	@ResponseBody
 	public String doModify(int id, String body, String replaceUri) {
@@ -119,6 +125,7 @@ public class UsrReplyController {
 		return rq.jsReplace(modifyReplyRd.getMsg(), replaceUri);
 	}
 	
+	// 댓글 삭제
 	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
 	public String doDelete(int id, String replaceUri) {

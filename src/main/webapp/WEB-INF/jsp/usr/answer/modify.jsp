@@ -15,7 +15,7 @@
 						<tr>
 							<td>
 								<div>
-									<p class="text-2xl">${article.title }</p>
+									<p class="text-4xl">${article.title }</p>
 								</div>
 								<div class="toast-ui-viewer">
 									<script type="text/x-template">${article.body }</script>

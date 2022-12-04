@@ -6,8 +6,6 @@ $('select[data-value]').each(function(index, el){
 	if(defaultValue.length > 0){
 		$el.val(defaultValue);		
 	}
-	
-	
 });
 
 $('.Popup').click(function(){
@@ -42,6 +40,7 @@ $(".close-menu").click(function(){
 			right: "-100%",
 	});
 	$("header").removeClass("active");
+	$(".back-board").removeClass("active");
 });
 
 $(".back-board").click(function(){
@@ -51,3 +50,37 @@ $(".back-board").click(function(){
 	$(this).removeClass("active");
 	$("header").removeClass("active");
 });
+
+// 메뉴 액티브
+let link = document.location.href.split("/");
+
+if(link[4] === "article" && link[5].startsWith("list")){
+	link[5] = link[5].split("?")[1].split("=")[1];
+	if(link[5] === "2"){
+		link[5] = "QA";
+	}else if(link[5] === "1"){
+		link[5] = "notice";
+	}
+}else if(link[5].startsWith("login")){
+	link[5] = "login";
+}else if(link[5].startsWith("join")){
+	link[5] = "join";
+}else if(link[4] === "rank"){
+	link[5] = "rank";
+}else if(link[5].startsWith("detail")){
+	link[5] = link[5].split("%3F")[1].split("%3D")[1];
+	if(link[5] === "2"){
+		link[5] = "QA";
+	}else if(link[5] === "1"){
+		link[5] = "notice";
+	}
+}
+
+$("header ul li").each(function(index, item){
+	if($(item).attr("tag") === link[5]){
+		$(item).addClass("active");
+	}
+});
+// 메뉴 액티브
+
+	
