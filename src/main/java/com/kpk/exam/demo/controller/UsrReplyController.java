@@ -72,18 +72,15 @@ public class UsrReplyController {
 			return rq.jsHistoryBack("해당 댓글을 수정할 권한이 없습니다.");
 		}
 		
-		String relDataTitle = null;
 		Object related = null;
 		switch (reply.getRelTypeCode()) {
 		case "article":
 			Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), reply.getRelId());
 			related = article;
-			relDataTitle = article.getTitle();
 			break;
 		}
 		
 		model.addAttribute("related", related);
-		model.addAttribute("relDataTitle", relDataTitle);
 		model.addAttribute("reply", reply);
 		
 		return "usr/reply/modify";

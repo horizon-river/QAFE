@@ -17,15 +17,46 @@
 								<div>
 									<p class="text-4xl">${article.title }</p>
 								</div>
+								<div class="mt-3 flex justify-between">
+									<div>
+										<span class="mr-3">${article.writer }</span>
+										<span>
+											<c:if test="${article.regDate != article.updateDate}">
+												${article.updateDate }
+												<span class="badge">수정됨</span>
+											</c:if>
+											<c:if test="${article.regDate == article.updateDate}">
+												${article.regDate }
+											</c:if>
+										</span>
+									</div>
+									
+									<div>
+										<span class="badge">조회수&nbsp;<span class="article-detail__hit-count"> ${article.hitCount }</span></span>
+										<span class="badge">추천수 ${article.goodReactionPoint }</span>
+										<c:if test="${board.id == 2}">
+											<span class="badge">답변수 ${article.extra__answerCount }</span>
+										</c:if>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
 								<div class="toast-ui-viewer">
 									<script type="text/x-template">${article.body }</script>
 								</div>
 							</td>
 						</tr>
 						<tr>
-							<td class="text-right">
-								<span class="badge">작성날짜 : ${answer.regDate }</span>
-								<span class="badge">수정날짜 : ${answer.updateDate }</span>
+							<td class="flex justify-between">
+								<div>
+									답변 작성/수정일
+								</div>
+								<div>
+									<span class="badge">작성날짜 : ${answer.regDate }</span>
+									<span class="badge">수정날짜 : ${answer.updateDate }</span>
+								</div>
 							</td>
 						</tr>
 						<tr>

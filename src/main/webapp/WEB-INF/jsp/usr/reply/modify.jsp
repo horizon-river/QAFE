@@ -48,9 +48,14 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="text-right">
-								<span class="badge">작성날짜 : ${reply.regDate }</span>
-								<span class="badge">수정날짜 : ${reply.updateDate }</span>
+							<td class="flex justify-between">
+								<div>
+									댓글 작성/수정일
+								</div>
+								<div>
+									<span class="badge">작성날짜 : ${reply.regDate }</span>
+									<span class="badge">수정날짜 : ${reply.updateDate }</span>
+								</div>
 							</td>
 						</tr>
 						<tr>
