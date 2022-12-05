@@ -43,15 +43,24 @@
 	<div class="container mx-auto text-xl">
 		<form onsubmit="submitWriteForm(this); return false;" class="table-box-type-1" method="post" action="../article/doWrite">
 		<input type="hidden" name="body" />
-	    <input name="boardId" value="2" readonly type="hidden" class="input input-bordered w-full" autocomplete="off"/>
 			<table class="table w-full">
 				<tbody>
 					<tr>
 						<td>
 							<div class="form-control">
 							  <label class="input-group">
-							    <span class="bg-primary">게시판 구분</span>
-							    <input disabled type="text" value="Q&A" class="input input-bordered w-full" autocomplete="off" />
+                                <c:if test="${!rq.loginedMember.isAdmin() }">
+    							    <span class="bg-primary">게시판 구분</span>
+    							    <input disabled type="text" value="질문게시판" class="input input-bordered w-full" autocomplete="off" />
+                            	    <input name="boardId" value="2" readonly type="hidden" autocomplete="off"/>
+                                </c:if>
+                                <c:if test="${rq.loginedMember.isAdmin() }">
+                                    <select name="boardId" class="select select-bordered w-full">
+                                      <option disabled selected>작성할 게시판을 선택해주세요</option>
+                                      <option value="2">질문게시판</option>
+                                      <option value="1">공지사항</option>
+                                    </select>
+                                </c:if>
 							  </label>
 							</div>
 						</td>
@@ -68,7 +77,7 @@
 					</tr>
 					<tr>
 						<td class="flex justify-between">
-							<button class="btn secondary" type="button" onclick="history.back();">취소</button>
+							<button class="btn" type="button" onclick="history.back();">취소</button>
 							<button class="btn accent" type="submit">작성</button>
 						</td>
 					</tr>

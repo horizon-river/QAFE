@@ -41,6 +41,12 @@ html>body, html>body .toast-ui-editor, html>body .toastui-editor-contents, html>
 	color: #fff;
 }
 
+.img-box {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: center;
+}
+
 /* 커스텀 */
 body {
 	min-width:800px;
@@ -197,6 +203,24 @@ header ul li .close-menu{
 	top:50%;
 	left:50%;
 	transform: translate(-50%, -50%);
+	min-width:1040px;
+	min-height:600px;
+	background-image: url("https://images.unsplash.com/photo-1484417894907-623942c8ee29?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80");
+	filter: grayscale(100%);
+}
+
+.black-box{
+	position:absolute;
+	background-color: rgba(0,0,0,0.5);
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index:-1;
+}
+
+.main-inner-box > h2{
+	color:#FFF;
 }
 
 /* 댓글 테이블 */

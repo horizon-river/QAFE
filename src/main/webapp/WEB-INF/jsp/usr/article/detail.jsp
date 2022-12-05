@@ -238,7 +238,7 @@
 			</form>
 		</c:if>
 		<c:if test="${rq.notLogined }">
-			<p>댓글 작성은 <a class="btn btn-primary" href="${rq.loginUri }">로그인</a> 후 이용해주세요.</p>
+			<p>댓글 작성은 <a class="btn active" href="${rq.loginUri }">로그인</a> 후 이용해주세요.</p>
 		</c:if>
 	</div>
 </section>
@@ -319,7 +319,7 @@
 	</c:if>
 	<c:if test="${rq.notLogined }">
 		<div class="container mx-auto mb-10">
-			답변 작성은 <a class="btn btn-primary" href="${rq.loginUri }">로그인</a> 후 이용해주세요.
+			답변 작성은 <a class="btn active" href="${rq.loginUri }">로그인</a> 후 이용해주세요.
 		</div>
 	</c:if>
 </section>

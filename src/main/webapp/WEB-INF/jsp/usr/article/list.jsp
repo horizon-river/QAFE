@@ -3,6 +3,12 @@
 <c:set var="pageTitle" value="${board.name}"/>
 <%@ include file="../common/head.jspf" %>
 
+    <section class="mt-8">
+      <div class="img-box list-image">
+        
+      </div>
+    </section>
+
 	<section class="mt-8 mb-10">
 		<div class="container mx-auto text-xl">
 			<div class="flex">
