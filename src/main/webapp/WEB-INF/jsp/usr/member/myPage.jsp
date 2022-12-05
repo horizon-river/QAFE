@@ -91,8 +91,8 @@
 					</tr>
 					<tr>
 						<td class="flex justify-between">							
-							<button class="btn btn-warning" type="button" onclick="history.back();">뒤로가기</button>
-							<a href="../member/checkPassword?replaceUri=${Ut.getUriEncoded('../member/modify') }" class="btn">회원정보수정</a>
+							<button class="btn" type="button" onclick="history.back();">뒤로가기</button>
+							<a href="../member/checkPassword?replaceUri=${Ut.getUriEncoded('../member/modify') }" class="btn accent">회원정보수정</a>
 						</td>
 					</tr>
 				</tbody>

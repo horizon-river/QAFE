@@ -49,7 +49,7 @@
 						<tr>
 							<td class="flex justify-between">
 								<button class="btn" type="button" onclick="history.back();">취소</button>
-								<button class="btn" type="submit">수정</button>
+								<button class="btn accent" type="submit">수정</button>
 							</td>
 						</tr>
 					</tbody>

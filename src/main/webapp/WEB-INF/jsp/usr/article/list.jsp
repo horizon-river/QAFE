@@ -3,7 +3,7 @@
 <c:set var="pageTitle" value="${board.name}"/>
 <%@ include file="../common/head.jspf" %>
 
-	<section class="mt-8">
+	<section class="mt-8 mb-10">
 		<div class="container mx-auto text-xl">
 			<div class="flex">
 				<div>게시물 갯수 : <span class="badge">${articlesCount } 개</span></div>
@@ -18,7 +18,7 @@
 						<option value="title, body">제목 + 내용</option>
 					</select>
 					<input value="${param.searchKeyword }" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요." class="input input-bordered" maxlength="20" />
-					<button class="btn" type="submit">검색</button>
+					<button class="btn accent" type="submit">검색</button>
 				</form>
 			</div>
 			<div class="table-box-type-1 overflow-x-auto mt-3">
@@ -54,7 +54,7 @@
 								<td class="title">
 									<a class="hover:underline" href="${rq.getArticleDetailUriFromArticleList(article) }">${article.title }</a>
 									<c:if test="${article.extra__choiceStatus == 1 }">
-										<span class="badge badge-success">채택됨</span>
+										<span class="badge active">채택됨</span>
 									</c:if>
 								</td>
 								<td>${article.forPrintType1RegDate }</td>
@@ -84,7 +84,7 @@
 						</c:if>
 					</c:if>
 					<c:forEach begin="${startPage }" end="${endPage }" var="i">
-						<a class="btn btn-sm ${page == i ? 'btn-active' : '' }" href="${pageBaseUri }&page=${i }">${i }</a>
+						<a class="btn btn-sm ${page == i ? 'active' : '' }" href="${pageBaseUri }&page=${i }">${i }</a>
 					</c:forEach>
 					<c:if test="${endPage < pagesCount}">
 						<c:if test="${endPage < pagesCount - 1 }">

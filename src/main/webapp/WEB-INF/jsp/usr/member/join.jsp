@@ -87,8 +87,8 @@
 						</tr>
 						<tr>
 							<td class="flex justify-between">
-								<button class="btn btn-warning" type="button" onclick="history.back();">취소</button>
-								<button type="submit" class="btn">회원가입</button>
+								<button class="btn" type="button" onclick="history.back();">취소</button>
+								<button type="submit" class="btn accent">회원가입</button>
 							</td>
 						</tr>
 					</tbody>

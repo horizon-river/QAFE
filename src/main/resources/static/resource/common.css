@@ -2,6 +2,7 @@
 	--primary: #1B1A17;
 	--active: #F0A500;
 	--accent: #E45826;
+	--secondary: #E6D5B8;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
@@ -80,6 +81,30 @@ body {
 	left: 0;
 }
 
+.btn.primary, .badge.primary {
+	background-color: var(--primary);
+	color: #fff;
+	border: var(--primary);
+}
+
+.btn.active, .badge.active{
+	background-color: var(--active);
+	color: var(--primary);
+	border: var(--active);
+}
+
+.btn.accent, .badge.accent{
+	background-color: var(--accent);
+	color: #fff;
+	border: var(--accent);
+}
+
+.btn.secondary, .badge.secondary {
+	background-color: var(--secondary);
+	color: var(--primary); 
+	border: var(--secondary);
+}
+
 .close-btn {
 	border: 5px solid white;
 	border-radius: 5px;
@@ -144,6 +169,14 @@ header ul li .close-menu{
 	border-radius: 5px;
 	padding-left: 20px;
 	padding-right: 20px;
+}
+
+.logo {
+	font-weight: bold;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	
 }
 
 .user-tab {

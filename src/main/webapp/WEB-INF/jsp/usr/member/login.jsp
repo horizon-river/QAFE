@@ -33,12 +33,12 @@
 						<tr>
 							<td class="flex justify-end">
 								<a class="btn mr-1" href="${rq.joinUri }">회원가입</a> 
-								<button class="btn btn-accent" type="submit">로그인</button>
+								<button class="btn accent" type="submit">로그인</button>
 							</td>
 						</tr>
 						<tr>
 							<td class="flex justify-between">
-								<button class="btn btn-warning" type="button" onclick="history.back();">뒤로가기</button>
+								<button class="btn" type="button" onclick="history.back();">뒤로가기</button>
 								<div>
 									<a href="${rq.findLoginIdUri }" class="btn btn-active btn-ghost" type="submit">아이디 찾기</a>
 									<a href="${rq.findLoginPwUri }" class="btn btn-active btn-ghost" type="submit">비밀번호 찾기</a>

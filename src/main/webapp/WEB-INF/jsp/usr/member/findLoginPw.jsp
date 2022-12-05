@@ -61,15 +61,15 @@
 					</tr>
 					<tr>
 						<td class="flex justify-end">
-							<button class="btn btn-active btn-ghost" type="submit">비밀번호 찾기</button>
+							<button class="btn btn-ghost accent" type="submit">비밀번호 찾기</button>
 						</td>
 					</tr>
 					<tr>
 						<td class="flex justify-between">
-							<button class="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
+							<button class="btn" type="button" onclick="history.back();">뒤로가기</button>
 							
 							<div>
-								<a href="/usr/member/login" class="btn btn-active btn-ghost" type="submit">로그인</a>
+								<a href="/usr/member/login" class="btn active" type="submit">로그인</a>
 								<a href="${rq.findLoginIdUri }" class="btn btn-active btn-ghost" type="submit">아이디 찾기</a>
 							</div>
 						</td>

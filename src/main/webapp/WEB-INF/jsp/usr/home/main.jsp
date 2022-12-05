@@ -7,7 +7,11 @@
 	<div class="container mx-auto">
 		<div class="text-center main-box text-4xl">
 			<h2>QAFE</h2>
-			<h2 class="mt-3">코딩에 대한 질문, 답변을 위한 사이트</h2>
+			<h2 class="mt-3 leading-relaxed">
+              코딩에 대한 질문
+              <br />
+              답변을 위한 사이트
+            </h2>
 			<div class="mt-3">
 				<a class="btn" href="${rq.joinUri }">회원가입</a>
 				<a class="btn" href="${rq.loginUri }">로그인</a>

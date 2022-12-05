@@ -94,7 +94,7 @@
 							<div class="text-4xl">
 								${article.title } 
 								<c:if test="${article.extra__choiceStatus == 1 }">
-									<span class="badge badge-success">채택됨</span>
+									<span class="badge active">채택됨</span>
 								</c:if></div>
 							<div class="mt-3 flex justify-between">
 								<div>
@@ -140,7 +140,7 @@
 							<c:if test="${actorCanCancelGoodReaction }">
 								<span>&nbsp;</span>
 								<a href="/usr/reactionPoint/doCancelGoodReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri}"  
-								class="btn btn-primary btn-sm">좋아요 👍</a>
+								class="btn active btn-sm">좋아요 👍</a>
 								<span>&nbsp;</span>
 								<a onclick="alert(this.title); return false;" title="좋아요를 먼저 취소해주세요." href="#"
 								class="btn btn-outline btn-sm">싫어요 👎</a>	
@@ -151,7 +151,7 @@
 								class="btn btn-outline btn-sm">좋아요 👍</a>
 								<span>&nbsp;</span>
 								<a href="/usr/reactionPoint/doCancelBadReaction?relTypeCode=article&relId=${param.id }&replaceUri=${rq.encodedCurrentUri}" 
-								class="btn btn-primary btn-sm">싫어요 👎</a>	
+								class="btn active btn-sm">싫어요 👎</a>	
 							</c:if>
 						</td>
 					</tr>
@@ -168,16 +168,16 @@
 				<span class="mx-5 text-red-500 underline">채택된 게시물은 수정 및 삭제가 불가능합니다.</span>
 			</c:if>
 			<c:if test="${empty param.listUri}">
-				<button class="btn btn-warning" type="button" onclick="history.back();">뒤로가기</button>			
+				<button class="btn primary" type="button" onclick="history.back();">뒤로가기</button>			
 			</c:if>
 			<c:if test="${not empty param.listUri}">
-				<a class="btn btn-warning" href="${param.listUri }">뒤로가기</a>			
+				<a class="btn primary" href="${param.listUri }">뒤로가기</a>			
 			</c:if>
 			<c:if test="${article.extra__actorCanModify && article.extra__choiceStatus == 0}">
-				<a class="btn btn-accent"  href="../article/modify?id=${article.id }">수정</a>
+				<a class="btn active"  href="../article/modify?id=${article.id }">수정</a>
 			</c:if>
 			<c:if test="${article.extra__actorCanDelete && article.extra__choiceStatus == 0}">
-				<a class="btn btn-error" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../article/doDelete?id=${article.id }">삭제</a>
+				<a class="btn accent" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../article/doDelete?id=${article.id }">삭제</a>
 			</c:if>
 		</div>
 	</div>
@@ -230,7 +230,7 @@
 							<td>${rq.loginedMember.nickname }</td>
 							<td class="flex">
 								<textarea class="w-full textarea textarea-bordered" name="body" placeholder="댓글을 입력해주세요." rows="3"></textarea>
-								<button class="btn btn-accent" type="submit">댓글작성</button>
+								<button class="btn primary" type="submit">댓글작성</button>
 							</td>
 						</tr>
 					</tbody>
@@ -256,7 +256,7 @@
 								<span class="mr-3 text-xl">
 									${answer.writer }
 									<c:if test="${answer.choiceStatus == 1 }">
-										<span class="badge badge-success">채택됨</span>
+										<span class="badge active">채택됨</span>
 									</c:if>
 									<c:if test="${article.extra__actorCanModify && article.extra__choiceStatus == 0}">
 										<a class="badge" href="../answer/doChoice?id=${answer.id }" 
@@ -279,10 +279,10 @@
 							</div>
 							<div class="text-right">
 								<c:if test="${answer.extra__actorCanModify }">
-									<a class="btn btn-accent"  href="../answer/modify?id=${answer.id }">수정</a>
+									<a class="btn active"  href="../answer/modify?id=${answer.id }">수정</a>
 								</c:if>
 								<c:if test="${answer.extra__actorCanDelete }">
-									<a class="btn btn-error" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../answer/doDelete?id=${answer.id }">삭제</a>
+									<a class="btn accent" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;" href="../answer/doDelete?id=${answer.id }">삭제</a>
 								</c:if>
 							</div>
 						</td>
@@ -312,7 +312,7 @@
 					</tbody>
 				</table>
 				<div>
-					<button class="btn btn-accent btn-block" type="submit">답변작성</button>
+					<button class="btn btn-block primary" type="submit">답변작성</button>
 				</div>
 			</form>
 		</div>

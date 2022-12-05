@@ -31,8 +31,8 @@
 						</tr>
 						<tr>
 							<td class="flex justify-between">
-								<button class="btn btn-warning" type="button" onclick="history.back();">뒤로가기</button>
-								<button class="btn btn-accent" type="submit">확인</button>
+								<button class="btn" type="button" onclick="history.back();">뒤로가기</button>
+								<button class="btn accent" type="submit">확인</button>
 							</td>
 						</tr>
 					</tbody>
