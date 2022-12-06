@@ -36,6 +36,18 @@
 		AND M.email = #{email}
 	</select>
 	
+	<select id="getMemberByEmail" resultType="Member">
+		SELECT *
+		FROM `member` AS M
+		WHERE M.email = #{email}
+	</select>
+	
+	<select id="getMemberByNickname" resultType="Member">
+		SELECT *
+		FROM `member` AS M
+		WHERE M.nickname = #{nickname}
+	</select>
+	
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>

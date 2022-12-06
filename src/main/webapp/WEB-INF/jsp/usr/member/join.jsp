@@ -125,10 +125,11 @@
 			isAjax : "Y",
 			loginId :form.loginId.value
 		},function(data){
-			$(".loginId-msg").html("<div class='mt-2'>" + data.msg + "</div>");
 			if(data.success) {
+				$(".loginId-msg").html("<div class='mt-2 text-green-600'>" + data.msg + "</div>");
 				validLoginId = data.data1;
 			}else {
+				$(".loginId-msg").html("<div class='mt-2 text-red-600'>" + data.msg + "</div>");
 				validLoginId = "";
 			}
 			
