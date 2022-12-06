@@ -23,13 +23,12 @@ public class UsrMemberController {
 	private Rq rq;
 	@Autowired
 	private AnswerService answerService;
-	
-	// 액션 메서드
+
 	@RequestMapping("/usr/member/join")
 	public String showJoin() {
 		return "usr/member/join"; 
 	}
-	
+
 	@RequestMapping("usr/member/doJoin")
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email, @RequestParam(defaultValue = "/") String afterLoginUri) {
@@ -44,12 +43,12 @@ public class UsrMemberController {
 		
 		return Ut.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요.", afterJoinUri);
 	}
-	
+
 	@RequestMapping("/usr/member/login")
 	public String showLogin() {
 		return "usr/member/login"; 
 	}
-	
+
 	@RequestMapping("usr/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw, @RequestParam(defaultValue = "/") String afterLoginUri) {
@@ -80,7 +79,7 @@ public class UsrMemberController {
 		
 		return Ut.jsReplace(Ut.f("%s님 환영합니다.", member.getNickname()), afterLoginUri);
 	}
-	
+
 	@RequestMapping("usr/member/findLoginId")
 	public String showFindLoginId() {
 		return "usr/member/findLoginId";
@@ -99,7 +98,6 @@ public class UsrMemberController {
 
 		return Ut.jsReplace(Ut.f("회원님의 아이디는 [ %s ] 입니다", member.getLoginId()), afterFindLoginIdUri);
 	}
-	
 
 	@RequestMapping("usr/member/findLoginPw")
 	public String showFindLoginPw() {
@@ -126,7 +124,6 @@ public class UsrMemberController {
 		return Ut.jsReplace(notifyTempLoginPwByEmailRd.getMsg(), afterFindLoginPwUri);
 	}
 
-	
 	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
 	public String doLogout(@RequestParam(defaultValue = "/") String afterLogoutUri) {
@@ -135,7 +132,7 @@ public class UsrMemberController {
 		
 		return Ut.jsReplace("로그아웃 되었습니다.", afterLogoutUri);
 	}
-	
+
 	@RequestMapping("usr/member/myPage")
 	public String showMyPage(Model model) {
 		int answerCount = answerService.getAnswerCountByMemberId(rq.getLoginedMemberId());
@@ -148,7 +145,7 @@ public class UsrMemberController {
 		
 		return "usr/member/myPage";
 	}
-
+	
 	@RequestMapping("usr/member/checkPassword")
 	public String showCheckPassword() {
 		return "usr/member/checkPassword";

@@ -315,7 +315,7 @@ relId = 3,
 INSERT INTO answer
 SET regDate = NOW(),
 updateDate = NOW(),
-memberId = 2,
+memberId = 3,
 relTypeCode = 'article',
 relId = 3,
 `body` = '답변 테스트2';
@@ -331,6 +331,84 @@ relId = 2,
 # 답변 테이블에 채택여부를 추가
 ALTER TABLE answer ADD COLUMN choiceStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '채택여부 (0=채택안됨,1=채택됨)' AFTER `body`;
 
+# 게시물 테스트 데이터 작성
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+boardId = 2,
+title = 'Bootstrap 5 드롭다운 메뉴가 작동이 안됩니다. 왜 안되는지 잘 모르겠어요..',
+`body` = '코드는 밑에 기록해뒀습니다. 아직 main.js 파일은 없구요, 드롭다운 메뉴를 눌렀을 때 작동해야 되는데 작동이 안되네요..
+
+코드 : 
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap</title>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  
+</head>
+<body>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+  </li>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+</body>
+</html>
+```';
+
+# 답변 테스트 데이터
+INSERT INTO answer
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 4,
+`body` = 'CDN으로 부트스트랩을 가져와야 합니다. 
+그리고 `data-bs-toggle="dropdown"` 속성을 드롭다운 여는 버튼에 추가해주세요.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap</title>
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  
+</head>
+<body>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+  </li>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script></script>
+</body>
+</html>
+```',
+choiceStatus = 1;
+
 #####################################################
 
 SELECT * FROM reactionPoint;
@@ -343,23 +421,11 @@ SELECT * FROM board;
 
 SELECT * FROM reply;
 
-SELECT * FROM answer;
+SELECT * FROM answer ORDER BY id DESC;
 
 SELECT * FROM attr;
 
 SELECT LAST_INSERT_ID();
-
-SELECT A.*, M.nickname AS writer
-FROM
-(SELECT ans.*
-FROM answer AS ans
-LEFT JOIN article AS art
-ON ans.relId = art.id
-WHERE relTypeCode = 'article'
-AND relId = 3) AS A
-LEFT JOIN `member` AS M
-ON A.memberId = M.id;
-
 
 /*
 # 게시물 늘리기
