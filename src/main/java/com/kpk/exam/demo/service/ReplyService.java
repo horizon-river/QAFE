@@ -22,7 +22,7 @@ public class ReplyService {
 		
 		int id = replyRepository.getLastInsertId();
 		
-		return ResultData.from("S-1", Ut.f("%d번 댓글이 등록되었습니다.", id), "id", id);
+		return ResultData.from("S-1", "댓글이 등록되었습니다.");
 	}
 
 	public List<Reply> getForPrintReplies(Member actor, String relTypeCode, int relId) {
@@ -83,13 +83,13 @@ public class ReplyService {
 	public ResultData deleteReply(int id) {
 		replyRepository.deleteReply(id);
 		
-		return ResultData.from("S-1", Ut.f("%d번 댓글을 삭제했습니다.", id));
+		return ResultData.from("S-1", "댓글을 삭제했습니다.");
 	}
 
 	public ResultData modifyReply(int id, String body) {
 		replyRepository.modifyReply(id, body);
 		
-		return ResultData.from("S-1", Ut.f("%d번 댓글을 수정했습니다.", id));
+		return ResultData.from("S-1", "댓글을 수정했습니다.");
 	}
 	
 }

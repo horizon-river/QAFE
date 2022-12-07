@@ -155,4 +155,8 @@ public class ArticleService {
 		
 		return ResultData.from("S-1", "싫어요 감소", "affectedRowsCount", affectedRowsCount);
 	}
+
+	public int getQuestionCountByMemberId(int loginedMemberId) {
+		return articleRepository.getQuestionCountByMemberId(loginedMemberId);
+	}
 }

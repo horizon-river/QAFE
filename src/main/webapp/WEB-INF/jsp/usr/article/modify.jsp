@@ -22,6 +22,9 @@
 								<div>
 									<span class="badge">조회수 ${article.hitCount }</span>
 									<span class="badge">추천 ${article.goodReactionPoint }</span>
+									<c:if test="${board.id == 2}">
+										<span class="badge">답변수 ${article.extra__answerCount }</span>
+									</c:if>
 								</div>
 							</td>
 						</tr>

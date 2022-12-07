@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kpk.exam.demo.service.AnswerService;
+import com.kpk.exam.demo.service.ArticleService;
 import com.kpk.exam.demo.service.MemberService;
 import com.kpk.exam.demo.util.Ut;
 import com.kpk.exam.demo.vo.Member;
@@ -18,11 +19,13 @@ import com.kpk.exam.demo.vo.Rq;
 public class UsrMemberController {
 	
 	@Autowired
-	private MemberService memberService;
-	@Autowired
 	private Rq rq;
 	@Autowired
+	private MemberService memberService;
+	@Autowired
 	private AnswerService answerService;
+	@Autowired
+	private ArticleService articleService;
 
 	@RequestMapping("/usr/member/join")
 	public String showJoin() {
@@ -64,7 +67,7 @@ public class UsrMemberController {
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if (member == null) {
-			return Ut.jsHistoryBack("아이디를 잘못 입력했습니다.");
+			return Ut.jsHistoryBack("존재하지 않는 아이디입니다.");
 		}
 		
 		if (member.getLoginPw().equals(Ut.sha256(loginPw)) == false) {
@@ -139,6 +142,10 @@ public class UsrMemberController {
 		
 		model.addAttribute("choicedAnswerCount", choicedAnswerCount);
 		
+		int questionCount = articleService.getQuestionCountByMemberId(rq.getLoginedMemberId());
+		
+		model.addAttribute("questionCount", questionCount);
+		
 		return "usr/member/myPage";
 	}
 	
@@ -192,7 +199,7 @@ public class UsrMemberController {
 		ResultData checkMemeberModifyAuthKeyRd = memberService.checkMemeberModifyAuthKey(rq.getLoginedMemberId(), memberModifyAuthKey);
 		
 		if(checkMemeberModifyAuthKeyRd.isFail()) {
-			return rq.jsHistoryBackOnView(checkMemeberModifyAuthKeyRd.getMsg());
+			return rq.jsHistoryBack(checkMemeberModifyAuthKeyRd.getMsg());
 		}
 		
 		if(Ut.empty(loginPw)) {

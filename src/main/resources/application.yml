@@ -5,7 +5,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: kimpk0416@gmail.com
-    password: ywjvohnopjrmwzur
+    password: 
     properties:
       mail:
         smtp:
@@ -26,10 +26,10 @@ spring:
 mybatis:
   type-aliases-package: com.kpk.exam.demo.vo
 custom:
-  siteName: SB_AM
+  siteName: QAFE
   siteMainUri: http://localhost:8081
   emailFrom: no-reply@localhost
-  emailFromName: SB_AM
+  emailFromName: QAFE
   logging:
     dir: log
     level: debug

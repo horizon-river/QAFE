@@ -137,9 +137,10 @@
 		WHERE id = #{relId}
 	</update>
 	
-	<select id="getArticle" resultType="Article">
-		SELECT *
+	<select id="getQuestionCountByMemberId" resultType="int">
+		SELECT COUNT(*)
 		FROM article
-		WHERE id = #{id}
+		WHERE memberId = #{loginedMemberId}
+		AND boardId = 2
 	</select>
 </mapper>

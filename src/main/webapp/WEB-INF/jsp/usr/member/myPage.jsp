@@ -23,6 +23,16 @@
 						<td>
 							<div class="form-control">
 							  <label class="input-group">
+							    <span class="bg-primary">총 질문 수</span>
+							    <input name="loginId" value="${questionCount}" disabled type="text" class="input input-bordered w-full" autocomplete="off"/>
+							  </label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="form-control">
+							  <label class="input-group">
 							    <span class="bg-primary">총 답변 수</span>
 							    <input name="loginId" value="${answerCount}" disabled type="text" class="input input-bordered w-full" autocomplete="off"/>
 							  </label>

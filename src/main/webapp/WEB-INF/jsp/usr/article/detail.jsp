@@ -192,7 +192,12 @@
 					<tr class="hover">
 						<td class="flex justify-between">
 							<div class="flex content-center items-center">
-								<span class="w-40">${reply.writer }</span>
+								<span class="w-40">
+									${reply.writer }
+									<c:if test="${reply.memberId == article.memberId}">
+										<span class="badge badge-sm accent">글쓴이</span>
+									</c:if>
+								</span>
 								<span>${reply.getForPrintBody()}</span>
 							</div>
 							<div>

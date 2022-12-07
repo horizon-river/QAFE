@@ -122,7 +122,7 @@ public class MemberService {
 	}
 	
 	public ResultData notifyTempLoginPwByEmailRd(Member actor) {
-		String title = "[" + siteName + "] 임시 패스워드 발송";
+		String title = "[" + siteName + "] 임시 패스워드가 발송됐습니다.";
 		String tempPassword = Ut.getTempPassword(6);
 		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
 		body += "<a href=\"" + siteMainUri + "/usr/member/login\" target=\"_blank\">로그인 하러가기</a>";
