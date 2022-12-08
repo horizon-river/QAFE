@@ -152,7 +152,6 @@ function getUriParams(uri) {
 
 	  return { toHTMLRenderers }
 	}
-	// 유튜브 플러그인 끝
 
 	// repl 플러그인 시작
 	function replPlugin() {
@@ -182,7 +181,9 @@ function getUriParams(uri) {
 
 	  return { toHTMLRenderers }
 	}
+	// repl 플러그인 끝
 
+	// 유튜브 플러그인 시작
 	function youtubePlugin() {
 	  const toHTMLRenderers = {
 	    youtube(node) {
@@ -247,10 +248,9 @@ function getUriParams(uri) {
 
 	    return '<div style="max-width:' + maxWidth + 'px; margin-left:' + marginLeft + '; margin-right:' + marginRight + ';" class="ratio-' + ratio + ' relative"><iframe class="absolute top-0 left-0 w-full" width="' + width + '" height="' + height + '" src="https://www.youtube.com/embed/' + youtubeId + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
 	  }
-	  // 유튜브 플러그인 끝
-
 	  return { toHTMLRenderers }
 	}
+    // 유튜브 플러그인 끝
 
 	// katex 플러그인
 	function katexPlugin() {

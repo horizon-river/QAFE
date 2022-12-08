@@ -69,7 +69,7 @@ loginPw = 'test1',
 `name` = '사용자1',
 nickname = '사용자1',
 cellphoneNum = '01098765432',
-email = 'kimpk0416@gmail.com';
+email = 'kimpk041@gmail.com';
 
 # 회원 테스트 데이터 생성 (일반)
 INSERT INTO `member`
@@ -81,7 +81,7 @@ loginPw = 'test2',
 `name` = '사용자2',
 nickname = '사용자2',
 cellphoneNum = '01012341234',
-email = 'kimpk0416@gmail.com';
+email = 'kimpk04@gmail.com';
 
 # 게시물 테이블에 회원번호 칼럼 추가
 ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `updateDate`;
@@ -369,6 +369,78 @@ title = 'Bootstrap 5 드롭다운 메뉴가 작동이 안됩니다. 왜 안되�
 </html>
 ```';
 
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 2,
+title = '최대 넓이일 때 넘쳐버리는 div를 맨 아래로 이동시키는 방법 좀 알려주세요',
+`body` = '태그 7, 8이 아래로 내려가지 않고 넘치네요..
+더 이상 사용할 수 있는 공간이 없을 때 어떻게 하면 밑으로 내릴 수 있는건가요?
+```css
+.main{
+  width: 300px;
+  height: 150px;
+  display:flex;
+  border: 2px solid #000;
+  padding: 10px;
+}
+
+.inner{
+  border: 1px solid #5eba7d;
+  margin-right:5px;
+  padding: 5px;
+  height: max-content;
+  width: max-content;
+  white-space:nowrap;
+}
+```
+```html
+<div class="main">
+ <div class="inner">tag 1</div>
+ <div class="inner">tag 2</div>
+ <div class="inner">tag 3</div>
+ <div class="inner">tag 4</div>
+ <div class="inner">tag 5</div>
+ <div class="inner">tag 6</div>
+ <div class="inner">tag 7</div>
+ <div class="inner">tag 8</div>
+</div>
+```';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 2,
+title = '반복 실행되는 함수를 어떻게 멈출 수 있나요?',
+`body` = "우선 제 코드 입니다.
+```javascript
+$('#mybtn').click(function () {
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d', {willReadFrequently: true});
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var interations = 0;
+
+    function drawOnCanvas() {
+        iterations++;
+        //draw stuff on the canvas
+        if (iterations < Number.MAX_SAFE_INTEGER - 1) {
+            window.requestAnimationFrame(drawOnCanvas);
+        }
+    }
+    drawOnCanvas();
+});
+```
+
+
+유저가 mybtn 을 두번 눌렀을 때 캔버스가 다 지워지고 다시 캔버스에 그리는걸 기대하고 있었습니다.
+그런데 이전 함수가 안멈추고 그대로 그려버리더라구요..
+한번에 2개의 함수가 작동하는 상태에서 또 버튼을 누르면 3개의 함수가 동시에 실행됩니다 ㅠ
+
+한 번에 하나씩, 중복없이 실행하는 방법이 있을까요?
+해결방법 부탁드립니다!";
+
 # 답변 테스트 데이터
 INSERT INTO answer
 SET regDate = NOW(),
@@ -408,6 +480,12 @@ relId = 4,
 </html>
 ```',
 choiceStatus = 1;
+
+UPDATE article
+SET memberId = 1,
+title = 'QAFE 공지사항',
+`body` = ''
+WHERE id = 1;
 
 #####################################################
 

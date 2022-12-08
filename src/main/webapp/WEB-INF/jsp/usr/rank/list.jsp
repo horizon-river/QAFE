@@ -20,7 +20,12 @@
 							<c:forEach var="rank" items="${totalAnswerRank }" varStatus="status">
 								<tr>
 									<td>${status.index + 1 }</td>
-									<td>${rank.nickname }</td>
+									<c:if test="${status.index == 0 }">
+										<td><i class="fa-solid fa-crown"></i> ${rank.nickname }</td>
+									</c:if>
+									<c:if test="${status.index != 0 }">
+										<td>${rank.nickname }</td>									
+									</c:if>
 									<td>${rank.resultCount }</td>
 								</tr>
 							</c:forEach>
@@ -42,7 +47,12 @@
 							<c:forEach var="rank" items="${totalQuestionRank }" varStatus="status">
 								<tr>
 									<td>${status.index + 1 }</td>
-									<td>${rank.nickname }</td>
+									<c:if test="${status.index == 0 }">
+										<td><i class="fa-solid fa-crown"></i> ${rank.nickname }</td>
+									</c:if>
+									<c:if test="${status.index != 0 }">
+										<td>${rank.nickname }</td>									
+									</c:if>
 									<td>${rank.resultCount }</td>
 								</tr>
 							</c:forEach>
@@ -65,7 +75,12 @@
 							<c:forEach var="rank" items="${totalChoicedAnswerRank }" varStatus="status">
 								<tr>
 									<td>${status.index + 1 }</td>
-									<td>${rank.nickname }</td>
+									<c:if test="${status.index == 0 }">
+										<td><i class="fa-solid fa-crown"></i> ${rank.nickname }</td>
+									</c:if>
+									<c:if test="${status.index != 0 }">
+										<td>${rank.nickname }</td>									
+									</c:if>
 									<td>${rank.resultCount }</td>
 								</tr>
 							</c:forEach>
@@ -87,7 +102,12 @@
 							<c:forEach var="rank" items="${totalChoicedMemberRank }" varStatus="status">
 								<tr>
 									<td>${status.index + 1 }</td>
-									<td>${rank.nickname }</td>
+									<c:if test="${status.index == 0 }">
+										<td><i class="fa-solid fa-crown"></i> ${rank.nickname }</td>
+									</c:if>
+									<c:if test="${status.index != 0 }">
+										<td>${rank.nickname }</td>									
+									</c:if>
 									<td>${rank.resultCount }</td>
 								</tr>
 							</c:forEach>

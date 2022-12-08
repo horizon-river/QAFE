@@ -299,7 +299,7 @@
 	
 	<c:if test="${rq.logined && actorCanWriteAnswer && article.extra__actorCanModify == false && article.extra__choiceStatus == 0}">
 		<div class="container mx-auto mb-10">
-			<p class="text-3xl">답변 작성</p>
+			<p class="text-3xl flex">답변 작성</p>
 			<form class="table-box-type-1" method="post" action="../answer/doWrite" onsubmit="AnswerWrite__submitForm(this); return false;">
 				<input type="hidden" name="body" />
 				<input type="hidden" name="relTypeCode" value="article" />
@@ -322,7 +322,7 @@
 			</form>
 		</div>
 	</c:if>
-	<c:if test="${rq.notLogined }">
+	<c:if test="${rq.notLogined && article.extra__choiceStatus == 0}">
 		<div class="container mx-auto mb-10">
 			답변 작성은 <a class="btn active" href="${rq.loginUri }">로그인</a> 후 이용해주세요.
 		</div>

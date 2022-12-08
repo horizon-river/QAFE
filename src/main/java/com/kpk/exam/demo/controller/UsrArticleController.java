@@ -114,7 +114,7 @@ public class UsrArticleController {
 		
 		articleService.deleteArticle(id);
 		
-		return rq.jsReplace(Ut.f("%d번 게시물이 삭제되었습니다.", id), "../article/list?boardId=1");
+		return rq.jsReplace("게시물이 삭제되었습니다.", "../article/list?boardId="+article.getBoardId());
 	}
 	
 	@RequestMapping("/usr/article/modify")

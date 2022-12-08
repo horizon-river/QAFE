@@ -231,10 +231,6 @@ header ul li .close-menu{
 	border-bottom: 1px solid #E3E6E8;
 }
 
-.reply-tabe .article-writer {
-	background-color: #E3E6E8;
-}
-
 /* 댓글 작성 */
 .reply-writer {
 	border-top: 1px solid #E3E6E8;

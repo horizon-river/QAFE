@@ -75,6 +75,18 @@
 					</tbody>
 				</table>
 			</div>
+			<c:choose>
+				<c:when test="${board.id == 2}">
+					<div class="text-right mt-3">
+						<a class="btn primary" href="/usr/article/write">글쓰기</a>
+					</div>
+				</c:when>
+				<c:when test="${board.id == 1 && rq.loginedMember.isAdmin() }">
+					<div class="text-right mt-3">
+						<a class="btn primary" href="/usr/article/write">글쓰기</a>
+					</div>
+				</c:when>
+			</c:choose>
 			<div class="page-menu flex justify-center mt-3">
 				<div class="btn-group">
 					<c:set var="pageMenuLen" value="6" />
