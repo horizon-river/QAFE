@@ -32,9 +32,11 @@ public class UsrMemberController {
 		return "usr/member/join"; 
 	}
 
+	// 회원가입 처리
 	@RequestMapping("usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email, @RequestParam(defaultValue = "/") String afterLoginUri) {
+	public String doJoin(String loginId, String loginPw, String name, String nickname, 
+			String cellphoneNum, String email, @RequestParam(defaultValue = "/") String afterLoginUri) {
 				
 		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		
@@ -47,14 +49,17 @@ public class UsrMemberController {
 		return Ut.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요.", afterJoinUri);
 	}
 
+	// 로그인 jsp 연결
 	@RequestMapping("/usr/member/login")
 	public String showLogin() {
 		return "usr/member/login"; 
 	}
 
+	// 로그인 처리
 	@RequestMapping("usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(String loginId, String loginPw, @RequestParam(defaultValue = "/") String afterLoginUri) {
+	public String doLogin(String loginId, String loginPw, 
+			@RequestParam(defaultValue = "/") String afterLoginUri) {
 		
 		if (Ut.empty(loginId)) {
 			return Ut.jsHistoryBack("아이디를 입력해주세요.");
@@ -79,11 +84,13 @@ public class UsrMemberController {
 		return Ut.jsReplace(Ut.f("%s님 환영합니다.", member.getNickname()), afterLoginUri);
 	}
 
+	// 아이디 찾기 jsp 연결
 	@RequestMapping("usr/member/findLoginId")
 	public String showFindLoginId() {
 		return "usr/member/findLoginId";
 	}
-
+	
+	// 아이디 찾기 처리
 	@RequestMapping("usr/member/doFindLoginId")
 	@ResponseBody
 	public String doFindLoginId(String name, String email,
@@ -98,17 +105,19 @@ public class UsrMemberController {
 		return Ut.jsReplace(Ut.f("회원님의 아이디는 [ %s ] 입니다", member.getLoginId()), afterFindLoginIdUri);
 	}
 
+	// 비밀번호 찾기 jsp 연결
 	@RequestMapping("usr/member/findLoginPw")
 	public String showFindLoginPw() {
 		return "usr/member/findLoginPw";
 	}
 
+	// 비밀번호 찾기 처리
 	@RequestMapping("usr/member/doFindLoginPw")
 	@ResponseBody
 	public String doFindLoginPw(String loginId, String email,
 			@RequestParam(defaultValue = "/") String afterFindLoginPwUri) {
 
-		Member member = memberService.getMemberByLoginId(loginId);
+		Member member = memberService.getMemberByLoginIdAndEmail(loginId, email);
 
 		if (member == null) {
 			return Ut.jsHistoryBack("일치하는 회원이 없습니다");
@@ -123,6 +132,7 @@ public class UsrMemberController {
 		return Ut.jsReplace(notifyTempLoginPwByEmailRd.getMsg(), afterFindLoginPwUri);
 	}
 
+	// 로그아웃 처리
 	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
 	public String doLogout(@RequestParam(defaultValue = "/") String afterLogoutUri) {
@@ -217,6 +227,7 @@ public class UsrMemberController {
 		
 	}
 	
+	// 중복 아이디 체크
 	@RequestMapping("usr/member/getLoginIdDup")
 	@ResponseBody
 	public ResultData getLoginIdDup(String loginId) {

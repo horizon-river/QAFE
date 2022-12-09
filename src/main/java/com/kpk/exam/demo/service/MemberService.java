@@ -25,7 +25,9 @@ public class MemberService {
 	@Autowired
 	private MailService mailService;
 
-	public ResultData<Integer> join(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+	// 회원가입
+	public ResultData<Integer> join(String loginId, String loginPw, String name, 
+			String nickname, String cellphoneNum, String email) {
 		// 로그인아이디 중복체크
 		Member existsMember = memberRepository.getMemberByLoginId(loginId);
 		
@@ -47,35 +49,46 @@ public class MemberService {
 			return ResultData.from("F-3", "이미 사용중인 이메일입니다.");
 		}
 		
+		// 비밀번호 암호화
 		loginPw = Ut.sha256(loginPw);
 		
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		int id = memberRepository.getLastInsertId();
 		return ResultData.from("S-1", "회원가입이 완료되었습니다.", "id", id);
 	}
-
-	public Member getMemberByNameAndEmail(String name, String email) {
-		return memberRepository.getMemberByNameAndEmail(name, email);
-	}
-	
+	// 이메일로 회원정보 조회
 	public Member getMemberByEmail(String email) {
 		return memberRepository.getMemberByEmail(email);
 	}
 	
+	// 닉네임으로 회원정보 조회
 	public Member getMemberByNickname(String nickname) {
 		return memberRepository.getMemberByNickname(nickname);
 	}
 
+	// id(데이터 베이스의 id)로 회원정보 조회
 	public Member getMemberById(int id) {
 		return memberRepository.getMemberById(id);	
 	}
 
+	// 이름과 이메일로 회원정보 조회
+	public Member getMemberByNameAndEmail(String name, String email) {
+		return memberRepository.getMemberByNameAndEmail(name, email);
+	}
+
+	// 로그인 아이디와 이메일로 회원정보 조회
+	public Member getMemberByLoginIdAndEmail(String loginId, String email) {
+		return memberRepository.getMemberByLoginIdAndEmail(loginId, email);
+	}
+	
+	// loginId(로그인용 아이디)로 회원정보 조회
 	public Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);
 	}
 
-	public ResultData modify(int id, String loginPw, String name, String nickname, String cellphoneNum,
-			String email) {
+	// 회원정보 수정
+	public ResultData modify(int id, String loginPw, String name, String nickname, 
+			String cellphoneNum, String email) {
 		
 		// 회원 정보를 수정중인 회원 확인
 		Member member = memberRepository.getMemberById(id);
@@ -102,14 +115,17 @@ public class MemberService {
 		return ResultData.from("S-1", "회원정보가 수정되었습니다.");
 	}
 
+	// 회원정보 수정용 키 발급
 	public String genMemberModifyAuthKey(int actorId) {
 		String memberModifyAuthKey = Ut.getTempPassword(10);
 		
-		attrService.setValue("member", actorId, "extra", "memberModifyAuthKey", memberModifyAuthKey, Ut.getDateStrLater(60 * 5));
+		attrService.setValue("member", actorId, "extra", "memberModifyAuthKey", 
+				memberModifyAuthKey, Ut.getDateStrLater(60 * 5));
 		
 		return memberModifyAuthKey;
 	}
 
+	// 발급된 수정용 키가 맞는지 체크
 	public ResultData checkMemeberModifyAuthKey(int actorId, String memberModifyAuthKey) {
 		String saved = attrService.getValue("member", actorId, "extra", "memberModifyAuthKey");
 		
@@ -121,6 +137,7 @@ public class MemberService {
 			
 	}
 	
+	// 임시 패스워드 전송
 	public ResultData notifyTempLoginPwByEmailRd(Member actor) {
 		String title = "[" + siteName + "] 임시 패스워드가 발송됐습니다.";
 		String tempPassword = Ut.getTempPassword(6);
@@ -138,6 +155,7 @@ public class MemberService {
 		return ResultData.from("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
 	}
 
+	// 임시 패스워드 설정
 	private void setTempPassword(Member actor, String tempPassword) {
 		memberRepository.modify(actor.getId(), Ut.sha256(tempPassword), null, null, null, null);
 	}
