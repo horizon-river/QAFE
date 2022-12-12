@@ -142,6 +142,7 @@ public class UsrMemberController {
 		return Ut.jsReplace("로그아웃 되었습니다.", afterLogoutUri);
 	}
 
+	// 마이 페이지 jsp 연결
 	@RequestMapping("usr/member/myPage")
 	public String showMyPage(Model model) {
 		int answerCount = answerService.getAnswerCountByMemberId(rq.getLoginedMemberId());
@@ -159,11 +160,13 @@ public class UsrMemberController {
 		return "usr/member/myPage";
 	}
 	
+	// 비밀번호 확인 jsp 연결
 	@RequestMapping("usr/member/checkPassword")
 	public String showCheckPassword() {
 		return "usr/member/checkPassword";
 	}
 	
+	// 비밀번호 확인 처리
 	@RequestMapping("usr/member/doCheckPassword")
 	@ResponseBody
 	public String doCheckPassword(String loginPw, String replaceUri) {
@@ -184,13 +187,15 @@ public class UsrMemberController {
 		return Ut.jsReplace("", replaceUri);
 	}
 	
+	// 회원정보 수정 jsp 연결
 	@RequestMapping("usr/member/modify")
 	public String showModify(String memberModifyAuthKey) {
 		if(Ut.empty(memberModifyAuthKey)) {
 			return rq.jsHistoryBackOnView("회원 수정 인증코드가 필요합니다.");
 		}
 		
-		ResultData checkMemeberModifyAuthKeyRd = memberService.checkMemeberModifyAuthKey(rq.getLoginedMemberId(), memberModifyAuthKey);
+		ResultData checkMemeberModifyAuthKeyRd = 
+				memberService.checkMemeberModifyAuthKey(rq.getLoginedMemberId(), memberModifyAuthKey);
 		
 		if(checkMemeberModifyAuthKeyRd.isFail()) {
 			return rq.jsHistoryBackOnView(checkMemeberModifyAuthKeyRd.getMsg());
@@ -199,14 +204,17 @@ public class UsrMemberController {
 		return "usr/member/modify";
 	}
 	
+	// 회원정보 수정 처리
 	@RequestMapping("usr/member/doModify")
 	@ResponseBody
-	public String doModify(String memberModifyAuthKey, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+	public String doModify(String memberModifyAuthKey, String loginPw, String name, 
+			String nickname, String cellphoneNum, String email) {
 		if(Ut.empty(memberModifyAuthKey)) {
 			return rq.jsHistoryBackOnView("회원 수정 인증코드가 필요합니다.");
 		}
 		
-		ResultData checkMemeberModifyAuthKeyRd = memberService.checkMemeberModifyAuthKey(rq.getLoginedMemberId(), memberModifyAuthKey);
+		ResultData checkMemeberModifyAuthKeyRd = 
+				memberService.checkMemeberModifyAuthKey(rq.getLoginedMemberId(), memberModifyAuthKey);
 		
 		if(checkMemeberModifyAuthKeyRd.isFail()) {
 			return rq.jsHistoryBack(checkMemeberModifyAuthKeyRd.getMsg());
@@ -217,13 +225,14 @@ public class UsrMemberController {
 			return rq.jsHistoryBack("유지할 비밀번호 또는 새 비밀번호를 입력해주세요.");
 		}
 		
-		ResultData modifyRd = memberService.modify(rq.getLoginedMemberId(), loginPw, name, nickname, cellphoneNum, email);
+		ResultData modifyRd = 
+				memberService.modify(rq.getLoginedMemberId(), loginPw, name, nickname, cellphoneNum, email);
 		
 		if(modifyRd.isFail()) {
 			return rq.jsHistoryBack(modifyRd.getMsg());
 		}
 		
-		return rq.jsReplace(modifyRd.getMsg(), "/");
+		return rq.jsReplace(modifyRd.getMsg(), "/usr/member/myPage");
 		
 	}
 	
@@ -232,7 +241,7 @@ public class UsrMemberController {
 	@ResponseBody
 	public ResultData getLoginIdDup(String loginId) {
 		
-		if (Ut.empty(loginId)) {
+		if (Ut.empty(loginId)) {	
 			return ResultData.from("F-1", "아이디를 입력해주세요.");
 		}
 		

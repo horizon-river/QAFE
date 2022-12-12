@@ -5,6 +5,7 @@
 
 <mapper namespace="com.kpk.exam.demo.repository.ReplyRepository">
 	
+	<!-- 댓글 작성 -->
 	<insert id="writeReply">
 		INSERT INTO reply
 		SET regDate = NOW(),
@@ -15,13 +16,14 @@
 		`body` = #{body}
 	</insert>
 	
+	<!-- 댓글 리스트 -->
 	<select id="getForPrintReplies" resultType="Reply">
 		SELECT R.*, M.nickname AS writer
 		FROM reply AS R
 		LEFT JOIN `member` AS M
 		ON R.memberId = M.id
-		WHERE relTypeCode = #{relTypeCode}
-		AND relId = #{relId}
+		WHERE R.relTypeCode = #{relTypeCode}
+		AND R.relId = #{relId}
 		ORDER BY R.id ASC
 	</select>
 	
@@ -29,6 +31,7 @@
 		SELECT LAST_INSERT_ID()
 	</select>
 	
+	<!-- 특정 댓글 조회 -->
 	<select id="getForPrintReply" resultType="Reply">
 		SELECT R.*, M.nickname AS writer
 		FROM reply AS R
@@ -37,16 +40,18 @@
 		WHERE R.id = #{id}
 	</select>
 	
-	<delete id="deleteReply">
-		DELETE FROM reply
-		WHERE id = #{id}
-	</delete>
-	
+	<!-- 댓글 수정 -->
 	<update id="modifyReply">
 		UPDATE reply
 		SET updateDate = NOW(),
 		`body` = #{body}
 		WHERE id = #{id}
 	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply">
+		DELETE FROM reply
+		WHERE id = #{id}
+	</delete>
 	
 </mapper>

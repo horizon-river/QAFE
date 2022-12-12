@@ -68,6 +68,7 @@
 		WHERE M.id = #{id}
 	</select>
 	
+	<!-- 회원정보 수정 -->
 	<update id="modify">
 		UPDATE `member`
 		<set>

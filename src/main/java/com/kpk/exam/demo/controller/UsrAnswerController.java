@@ -24,23 +24,25 @@ public class UsrAnswerController {
 	@Autowired
 	private Rq rq;
 	
+	// 답변 작성 처리
 	@RequestMapping("/usr/answer/doWrite")
 	@ResponseBody
 	public String doWrite(String relTypeCode, int relId, String replaceUri, String body) {
 		
 		if (Ut.empty(relTypeCode)) {
-			return rq.jsHistoryBack("relTypeCode을(를) 입력해주세요");
+			return rq.jsHistoryBack("잘못된 요청입니다.");
 		}
 
 		if (Ut.empty(relId)) {
-			return rq.jsHistoryBack("relId을(를) 입력해주세요");
+			return rq.jsHistoryBack("잘못된 게시물입니다.");
 		}
 
 		if (Ut.empty(body)) {
 			return rq.jsHistoryBack("내용을 입력해주세요");
 		}
 		
-		ResultData writeAnswerRd = answerService.writeAnswer(rq.getLoginedMemberId(), relTypeCode, relId, body);
+		ResultData writeAnswerRd = 
+				answerService.writeAnswer(rq.getLoginedMemberId(), relTypeCode, relId, body);
 		
 		if (Ut.empty(replaceUri)) {
 			switch (relTypeCode) {
@@ -53,6 +55,7 @@ public class UsrAnswerController {
 		return rq.jsReplace(writeAnswerRd.getMsg(), replaceUri);
 	}
 	
+	// 답변 수정 jsp 연결
 	@RequestMapping("/usr/answer/modify")
 	public String modify(Model model, int id) {
 
@@ -84,6 +87,7 @@ public class UsrAnswerController {
 		return "usr/answer/modify";
 	}
 	
+	// 답변 수정 처리
 	@RequestMapping("/usr/answer/doModify")
 	@ResponseBody
 	public String doModify(int id, String body, String replaceUri) {
@@ -119,6 +123,7 @@ public class UsrAnswerController {
 		return rq.jsReplace(modifyAnswerRd.getMsg(), replaceUri);
 	}
 	
+	// 답변 삭제 처리
 	@RequestMapping("/usr/answer/doDelete")
 	@ResponseBody
 	public String doDelete(int id, String replaceUri) {
@@ -150,6 +155,7 @@ public class UsrAnswerController {
 		return rq.jsReplace(deleteAnswerRd.getMsg(), replaceUri);
 	}
 	
+	// 답변 채택
 	@RequestMapping("/usr/answer/doChoice")
 	@ResponseBody
 	public String doChoice(int id, String replaceUri){
@@ -166,7 +172,8 @@ public class UsrAnswerController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), answer.getRelId());
 		
 		if (article.getExtra__choiceStatus() == 1) {
-			return rq.jsReplace(Ut.f("%d번 글은 이미 채택된 상태입니다.", answer.getRelId()), Ut.f("../article/detail?id=%d", answer.getRelId()));
+			return rq.jsReplace(Ut.f("%d번 글은 이미 채택된 상태입니다.", answer.getRelId()), 
+					Ut.f("../article/detail?id=%d", answer.getRelId()));
 		}
 		
 		ResultData choiceAnswerRd = answerService.choiceAnswer(id);

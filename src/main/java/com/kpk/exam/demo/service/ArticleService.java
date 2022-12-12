@@ -21,7 +21,7 @@ public class ArticleService {
 		this.articleRepository = articleRepository;
 	}
 	
-	// 서비스메서드	
+	// 게시물 상세내용
 	public Article getForPrintArticle(int actorId, int id) {
 		Article article = articleRepository.getForPrintArticle(id);
 		
@@ -30,6 +30,7 @@ public class ArticleService {
 		return article;
 	}
 	
+	// 데이터에 대한 권한 업데이트
 	private void updateForPrintData(int actorId, Article article) {
 		if (article == null) {
 			return;
@@ -40,14 +41,45 @@ public class ArticleService {
 		
 		ResultData actorCanModifyRd = actorCanModify(actorId, article);
 		article.setExtra__actorCanModify(actorCanModifyRd.isSuccess());
-		
 	}
 
-	public List<Article> getForPrintArticles(int actorId, int boardId, int itemsInAPage, int page, String searchKeywordTypeCode, String searchKeyword) {
+	// 로그인한 회원의 수정권한 체크
+	public ResultData actorCanModify(int loginedMemberId, Article article) {
+		if (article == null) {
+			return ResultData.from("F-1", "게시물이 존재하지 않습니다");
+		}
+		
+		if (article.getMemberId() != loginedMemberId) {
+			return ResultData.from("F-2", "해당 게시물에 대한 권한이 없습니다.");
+		}
+		return ResultData.from("S-1", "수정 가능");
+	}
+
+	// 로그인한 회원의 삭제권한 체크
+	public ResultData actorCanDelete(int actorId, Article article) {
+		if (article == null) {
+			return ResultData.from("F-1", "게시물이 존재하지 않습니다");
+		}
+		
+		if (article.getMemberId() != actorId) {
+			return ResultData.from("F-2", "해당 게시물에 대한 권한이 없습니다.");
+		}
+		return ResultData.from("S-1", "삭제 가능");
+	}
+
+	// 총 게시물 수
+	public int getArticlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
+		return articleRepository.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
+	}
+
+	// 게시물 리스트
+	public List<Article> getForPrintArticles(int actorId, int boardId, int itemsInAPage, 
+			int page, String searchKeywordTypeCode, String searchKeyword) {
 		
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
-		List<Article> articles = articleRepository.getArticles(boardId, limitStart, limitTake, searchKeywordTypeCode, searchKeyword);
+		List<Article> articles = articleRepository.getArticles(boardId, limitStart, 
+				limitTake, searchKeywordTypeCode, searchKeyword);
 		
 		for (Article article : articles) {
 			updateForPrintData(actorId, article);
@@ -56,6 +88,7 @@ public class ArticleService {
 		return articles;
 	}
 	
+	// 게시물 작성
 	public ResultData<Integer> writeArticle(int loginedMemberId, int boardId, String title, String body) {
 		articleRepository.writeArticle(loginedMemberId, boardId, title, body);
 		int id = articleRepository.getLastInsertId();
@@ -73,32 +106,6 @@ public class ArticleService {
 		Article article = getForPrintArticle(0, id);
 		
 		return ResultData.from("S-1", Ut.f("%d번 게시물을 수정했습니다.", id), "article", article);
-	}
-
-	public ResultData actorCanModify(int loginedMemberId, Article article) {
-		if (article == null) {
-			return ResultData.from("F-1", "게시물이 존재하지 않습니다");
-		}
-		
-		if (article.getMemberId() != loginedMemberId) {
-			return ResultData.from("F-2", "해당 게시물에 대한 권한이 없습니다.");
-		}
-		return ResultData.from("S-1", "수정 가능");
-	}
-	
-	public ResultData actorCanDelete(int actorId, Article article) {
-		if (article == null) {
-			return ResultData.from("F-1", "게시물이 존재하지 않습니다");
-		}
-		
-		if (article.getMemberId() != actorId) {
-			return ResultData.from("F-2", "해당 게시물에 대한 권한이 없습니다.");
-		}
-		return ResultData.from("S-1", "삭제 가능");
-	}
-
-	public int getArticlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
-		return articleRepository.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
 	}
 
 	public ResultData<Integer> increaseHitCount(int id) {

@@ -4,6 +4,8 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kpk.exam.demo.repository.AnswerRepository">
+
+	<!-- 답변 작성 -->
 	<insert id="writeAnswer">
 		INSERT INTO answer
 		SET regDate = NOW(),
@@ -14,6 +16,14 @@
 		`body` = #{body}
 	</insert>
 	
+	<!-- 특정 답변 조회 -->
+	<select id="getAnswer" resultType="Answer">
+		SELECT *
+		FROM answer
+		WHERE id = #{id}
+	</select>
+	
+	<!-- 답변 수정 -->
 	<update id="modifyAnswer">
 		UPDATE answer
 		SET updateDate = NOW(),
@@ -21,23 +31,20 @@
 		WHERE id = #{id}
 	</update>
 	
+	<!-- 답변 삭제 -->
 	<delete id="deleteAnswer">
 		DELETE FROM answer
 		WHERE id = #{id}
 	</delete>
 	
+	<!-- 답변 채택 -->
 	<update id="choiceAnswer">
 		UPDATE answer
 		SET choiceStatus = 1
 		WHERE id = #{id}
 	</update>
 	
-	<select id="getAnswer" resultType="Answer">
-		SELECT *
-		FROM answer
-		WHERE id = #{id}
-	</select>
-		
+	<!-- 답변 리스트 조회 -->	
 	<select id="getAnswers" resultType="Answer">
 		SELECT A.*, M.nickname AS writer
 		FROM
@@ -52,6 +59,7 @@
 		ORDER BY choiceStatus DESC;
 	</select>
 	
+	<!-- 답변 작성 가능한지 체크(2개 이상의 답변 작성 불가) -->
 	<select id="getActorCanWriteAnswer" resultType="int">
 		SELECT COUNT(*)
 		FROM answer

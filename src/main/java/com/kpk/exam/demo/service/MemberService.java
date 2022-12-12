@@ -103,7 +103,8 @@ public class MemberService {
 
 		// 이메일 중복체크
 		existsMember = getMemberByEmail(email);
-		
+
+		// 닉네임 중복체크 했을 때, 수정중인 회원 번호와 중복체크의 회원 번호가 같지 않으면 리턴
 		if(existsMember != null && member.getId() != existsMember.getId()) {
 			return ResultData.from("F-2", "이미 사용중인 이메일입니다.");
 		}

@@ -17,10 +17,12 @@ public class UsrReactionPointController {
 	@Autowired
 	private Rq rq;
 	
+	// 좋아요 추가
 	@RequestMapping("/usr/reactionPoint/doGoodReaction")
 	@ResponseBody
 	public String doGoodReaction(String relTypeCode, int relId, String replaceUri) {
-		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId() ,relTypeCode, relId);
+		ResultData actorCanMakeReactionRd = 
+				reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId() ,relTypeCode, relId);
 		
 		if (actorCanMakeReactionRd.isFail()) {
 			return rq.jsHistoryBackOnView(actorCanMakeReactionRd.getMsg());
@@ -28,13 +30,15 @@ public class UsrReactionPointController {
 		
 		reactionPointService.addGoodReactionPoint(rq.getLoginedMemberId() ,relTypeCode, relId);
 		
-		return rq.jsReplace("좋아요!", replaceUri); 
+		return rq.jsReplace("좋아요 처리 완료", replaceUri); 
 	}
 	
+	// 싫어요 추가
 	@RequestMapping("/usr/reactionPoint/doBadReaction")
 	@ResponseBody
 	public String doBadReaction(String relTypeCode, int relId, String replaceUri) {
-		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId() ,relTypeCode, relId);
+		ResultData actorCanMakeReactionRd = 
+				reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId() ,relTypeCode, relId);
 		
 		if (actorCanMakeReactionRd.isFail()) {
 			return rq.jsHistoryBackOnView(actorCanMakeReactionRd.getMsg());
@@ -42,13 +46,15 @@ public class UsrReactionPointController {
 		
 		reactionPointService.addBadReactionPoint(rq.getLoginedMemberId() ,relTypeCode, relId);
 		
-		return rq.jsReplace("싫어요!", replaceUri); 
+		return rq.jsReplace("싫어요 처리 완료", replaceUri); 
 	}
 	
+	// 좋아요 취소 처리
 	@RequestMapping("/usr/reactionPoint/doCancelGoodReaction")
 	@ResponseBody
 	public String doCancelGoodReaction(String relTypeCode, int relId, String replaceUri) {
-		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId() ,relTypeCode, relId);
+		ResultData actorCanMakeReactionRd = 
+				reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId() ,relTypeCode, relId);
 		
 		if (actorCanMakeReactionRd.isSuccess()) {
 			return rq.jsHistoryBackOnView("처리할 수 없습니다.");
@@ -59,10 +65,12 @@ public class UsrReactionPointController {
 		return rq.jsReplace("좋아요 취소 처리 되었습니다.", replaceUri); 
 	}
 	
+	// 싫어요 취소 처리
 	@RequestMapping("/usr/reactionPoint/doCancelBadReaction")
 	@ResponseBody
 	public String doCancelBadReaction(String relTypeCode, int relId, String replaceUri) {
-		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId() ,relTypeCode, relId);
+		ResultData actorCanMakeReactionRd = 
+				reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId() ,relTypeCode, relId);
 		
 		if (actorCanMakeReactionRd.isSuccess()) {
 			return rq.jsHistoryBackOnView("처리할 수 없습니다.");

@@ -10,10 +10,10 @@ import com.kpk.exam.demo.vo.Answer;
 public interface AnswerRepository {
 
 	void writeAnswer(int memberId, String relTypeCode, int relId, String body);
+	
+	int getLastInsertId();
 
 	List<Answer> getAnswers(String relTypeCode, int relId);
-
-	int getLastInsertId();
 
 	int getActorCanWriteAnswer(int loginedMemberId, String relTypeCode, int relId);
 

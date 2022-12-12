@@ -41,7 +41,8 @@ public class UsrReplyController {
 			return rq.jsHistoryBack("내용을 입력해주세요");
 		}
 		
-		ResultData writeReplyRd = replyService.writeReply(rq.getLoginedMemberId(), relTypeCode, relId, body);
+		ResultData writeReplyRd = 
+				replyService.writeReply(rq.getLoginedMemberId(), relTypeCode, relId, body);
 		
 		if (Ut.empty(replaceUri)) {
 			switch (relTypeCode) {
@@ -86,7 +87,7 @@ public class UsrReplyController {
 		return "usr/reply/modify";
 	}
 	
-	// 댓글 수정
+	// 댓글 수정 처리
 	@RequestMapping("/usr/reply/doModify")
 	@ResponseBody
 	public String doModify(int id, String body, String replaceUri) {
@@ -122,7 +123,7 @@ public class UsrReplyController {
 		return rq.jsReplace(modifyReplyRd.getMsg(), replaceUri);
 	}
 	
-	// 댓글 삭제
+	// 댓글 삭제 처리
 	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
 	public String doDelete(int id, String replaceUri) {
