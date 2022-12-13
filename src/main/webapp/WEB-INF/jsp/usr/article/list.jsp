@@ -66,7 +66,18 @@
 								<td>${article.forPrintType1RegDate }</td>
 								<td>${article.writer }</td>
 								<td>${article.hitCount }</td>
-								<td>${article.goodReactionPoint }</td>
+                                <c:set var="reactionPoint" value="${article.goodReactionPoint - article.badReactionPoint }" />
+								<td>
+                                  <c:if test="${reactionPoint > 0 }">
+                                    <span class="text-green-600">${reactionPoint}</span>
+                                  </c:if>
+                                  <c:if test="${reactionPoint == 0 }">
+                                    ${reactionPoint}
+                                  </c:if>
+                                  <c:if test="${reactionPoint < 0 }">
+                                    <span class="text-red-600">${reactionPoint}</span>
+                                  </c:if>
+                                </td>
 								<c:if test="${board.id == 2}">
 									<td>${article.extra__answerCount }</td>
 								</c:if>

@@ -112,7 +112,8 @@
 								
 								<div>
 									<span class="badge">조회수&nbsp;<span class="article-detail__hit-count"> ${article.hitCount }</span></span>
-									<span class="badge">추천수 ${article.goodReactionPoint }</span>
+                                    <c:set var="reactionPoint" value="${article.goodReactionPoint - article.badReactionPoint }" />
+									<span class="badge">추천수 ${reactionPoint }</span>
 									<c:if test="${board.id == 2}">
 										<span class="badge">답변수 ${article.extra__answerCount }</span>
 									</c:if>
