@@ -4,6 +4,8 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kpk.exam.demo.repository.RankRepository">
+
+	<!-- 총 답변의 수로 정렬하여 조회 --> 
 	<select id="getTotalAnswerRank" resultType="Rank">
 		SELECT M.nickname, COUNT(*) AS resultCount
 		FROM answer AS A
@@ -13,6 +15,7 @@
 		ORDER BY resultCount DESC, memberId ASC;
 	</select>
 	
+	<!-- 총 질문의 수로 정렬하여 조회 --> 
 	<select id="getTotalQuestionRank" resultType="Rank">
 		SELECT M.nickname, COUNT(*) AS resultCount
 		FROM article AS A
@@ -23,6 +26,7 @@
 		ORDER BY resultCount DESC, memberId ASC;
 	</select>
 	
+	<!-- 채택된 답변의 수로 정렬하여 조회 --> 
 	<select id="getTotalChoicedAnswerRank" resultType="Rank">
 		SELECT M.nickname, COUNT(*) AS resultCount
 		FROM answer AS A
@@ -33,6 +37,7 @@
 		ORDER BY resultCount DESC, memberId ASC;
 	</select>
 	
+	<!-- 채택한 답변의 수로 정렬하여 조회 -->
 	<select id="getTotalChoicedMemberRank" resultType="Rank">
 		SELECT M.nickname, COUNT(*) AS resultCount
 		FROM article AS A

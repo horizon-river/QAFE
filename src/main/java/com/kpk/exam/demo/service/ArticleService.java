@@ -74,12 +74,12 @@ public class ArticleService {
 
 	// 게시물 리스트
 	public List<Article> getForPrintArticles(int actorId, int boardId, int itemsInAPage, 
-			int page, String searchKeywordTypeCode, String searchKeyword) {
+			int page, String searchKeywordTypeCode, String searchKeyword, String sortBy) {
 		
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 		List<Article> articles = articleRepository.getArticles(boardId, limitStart, 
-				limitTake, searchKeywordTypeCode, searchKeyword);
+				limitTake, searchKeywordTypeCode, searchKeyword, sortBy);
 		
 		for (Article article : articles) {
 			updateForPrintData(actorId, article);
@@ -96,10 +96,12 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 게시물이 생성되었습니다.", id), "id", id);
 	}
 	
+	// 게시물 삭제
 	public void deleteArticle(int id) {
 		articleRepository.deleteArticle(id);
 	}
 
+	// 게시물 수정
 	public ResultData<Article> modifyArticle(int id, String title, String body) {
 		articleRepository.modifyArticle(id, title, body);
 		

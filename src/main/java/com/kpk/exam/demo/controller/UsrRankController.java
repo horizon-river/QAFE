@@ -19,23 +19,19 @@ public class UsrRankController {
 	@Autowired
 	private Rq rq;
 	
-	// 액션 메서드
+	// 랭킹 리스트 jsp 연결
 	@RequestMapping("usr/rank/list")
 	public String showRankList(Model model) {
 		List<Rank> totalAnswerRank = rankService.getTotalAnswerRank();
-		
 		model.addAttribute("totalAnswerRank", totalAnswerRank);
 		
 		List<Rank> totalQuestionRank = rankService.getTotalQuestionRank();
-		
 		model.addAttribute("totalQuestionRank", totalQuestionRank);
 		
 		List<Rank> totalChoicedAnswerRank = rankService.getTotalChoicedAnswerRank();
-		
 		model.addAttribute("totalChoicedAnswerRank", totalChoicedAnswerRank);
 		
 		List<Rank> totalChoicedMemberRank = rankService.getTotalChoicedMemberRank();
-		
 		model.addAttribute("totalChoicedMemberRank", totalChoicedMemberRank);
 		
 		return "usr/rank/list";

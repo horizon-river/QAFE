@@ -24,10 +24,6 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	// NeedLoginInterceptor 불러오기
 	@Autowired
 	NeedLogoutInterceptor needLogoutInterceptor;
-	
-	// NeedAuthLevelInterceptor 불러오기
-	@Autowired
-	NeedAuthLevelInterceptor needAuthLevelInterceptor;	
 
 	// 인터셉터 적용
 	@Override
@@ -40,6 +36,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.excludePathPatterns("/resource/**");
 		ir.excludePathPatterns("/error");
 		
+		// 로그인이 필요한 URI
 		ir = registry.addInterceptor(needLoginInterceptor);
 		ir.addPathPatterns("/usr/member/myPage");
 		ir.addPathPatterns("/usr/member/checkPassword");
@@ -66,6 +63,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/answer/doDelete");
 		ir.addPathPatterns("/usr/answer/doChoice");
 		
+		// 로그아웃이 필요한 URI
 		ir = registry.addInterceptor(needLogoutInterceptor);
 		ir.addPathPatterns("/usr/member/login");
 		ir.addPathPatterns("/usr/member/doLogin");
@@ -76,9 +74,6 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/member/doFindLoginId");
 		ir.addPathPatterns("/usr/member/findLoginPw");
 		ir.addPathPatterns("/usr/member/doFindLoginPw");
-		
-		ir = registry.addInterceptor(needAuthLevelInterceptor);
-		ir.addPathPatterns("/usr/admin/home");
 	}
 	
 }

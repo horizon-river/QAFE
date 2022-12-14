@@ -14,7 +14,7 @@ public interface ArticleRepository {
 	public Article getForPrintArticle(int id);
 	
 	public List<Article> getArticles(int boardId, int limitStart, int limitTake, 
-			String searchKeywordTypeCode, String searchKeyword);
+			String searchKeywordTypeCode, String searchKeyword, String sortBy);
 	
 	public int getLastInsertId();
 	

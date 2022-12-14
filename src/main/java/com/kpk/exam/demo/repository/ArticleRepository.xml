@@ -38,7 +38,8 @@
 	    SELECT A.*, M.nickname as writer, 
 	    (SELECT COUNT(*) FROM answer WHERE A.id = answer.relId) AS extra__answerCount,
 		IFNULL((SELECT choiceStatus FROM answer 
-				WHERE A.id = answer.relId AND answer.choiceStatus = 1), 0) AS extra__choiceStatus
+				WHERE A.id = answer.relId AND answer.choiceStatus = 1), 0) AS extra__choiceStatus,
+		(goodReactionPoint - badReactionPoint) AS extra__sumReactionPoint
 		FROM article AS A
 		LEFT JOIN `member` AS M
 		ON A.memberId = M.id
@@ -62,17 +63,34 @@
 				</otherwise>
 			</choose>
 		</if>
-		ORDER BY A.id DESC
+		<if test="sortBy != null">
+			<choose>
+				<when test="sortBy == 'regDate'">
+					ORDER BY A.regDate DESC
+				</when>
+				<when test="sortBy == 'hitCount'">
+					ORDER BY A.hitCount DESC, A.regDate DESC
+				</when>
+				<when test="sortBy == 'extra__sumReactionPoint'">
+					ORDER BY extra__sumReactionPoint DESC, A.regDate DESC
+				</when>
+				<otherwise>
+					ORDER BY A.id DESC
+				</otherwise>
+			</choose>
+		</if>
 		<if test="limitTake != -1">
 			LIMIT #{limitStart}, #{limitTake}
 		</if>
 	</select>
 	
+	<!-- 게시물 삭제 -->
 	<delete id="deleteArticle">
 		DELETE FROM article 
 		WHERE id = #{id}
 	</delete>
 	
+	<!-- 게시물 수정 -->
 	<update id="modifyArticle">
 		UPDATE article 
 		<set>
@@ -115,30 +133,35 @@
 		WHERE id = #{id}
 	</update>
 	
+	<!-- 조회수 증가 -->
 	<select id="getArticleHitCount" resultType="int">
 		SELECT hitCount
 		FROM article
 		WHERE id=#{id}
 	</select>
 	
+	<!-- 좋아요 추가 반영 -->
 	<update id="increaseGoodReactionPoint">
 		UPDATE article
 		SET goodReactionPoint = goodReactionPoint + 1
 		WHERE id = #{relId}
 	</update>
 	
+	<!-- 싫어요 추가 반영 -->
 	<update id="increaseBadReactionPoint">
 		UPDATE article
 		SET badReactionPoint = badReactionPoint + 1
 		WHERE id = #{relId}
 	</update>
 	
+	<!-- 좋아요 취소 처리 반영 -->
 	<update id="decreaseGoodReactionPoint">
 		UPDATE article
 		SET goodReactionPoint = goodReactionPoint - 1
 		WHERE id = #{relId}
 	</update>
 	
+	<!-- 싫어요 취소 처리 반영 -->
 	<update id="decreaseBadReactionPoint">
 		UPDATE article
 		SET badReactionPoint = badReactionPoint - 1

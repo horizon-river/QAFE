@@ -75,7 +75,8 @@ public class UsrArticleController {
 			@RequestParam(defaultValue = "1") int boardId, 
 			@RequestParam(defaultValue = "title,body") String searchKeywordTypeCode, 
 			@RequestParam(defaultValue = "") String searchKeyword,
-			@RequestParam(defaultValue = "1") int page) {
+			@RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "id") String sortBy) {
 		
 		Board board = boardService.getBoardById(boardId);
 
@@ -90,7 +91,7 @@ public class UsrArticleController {
 		int pagesCount = (int) Math.ceil((double)articlesCount / itemsInAPage);
 		
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId, 
-				itemsInAPage, page, searchKeywordTypeCode, searchKeyword);
+				itemsInAPage, page, searchKeywordTypeCode, searchKeyword, sortBy);
 		
 		model.addAttribute("boardId", boardId);
 		model.addAttribute("board", board);

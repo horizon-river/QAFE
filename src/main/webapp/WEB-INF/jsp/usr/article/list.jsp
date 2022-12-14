@@ -25,6 +25,13 @@
 					</select>
 					<input value="${param.searchKeyword }" name="searchKeyword" type="text" placeholder="검색어를 입력해주세요." class="input input-bordered" maxlength="20" />
 					<button class="btn accent" type="submit">검색</button>
+					<select data-value="${param.sortBy}" class="select select-bordered" name="sortBy">
+						<option disabled>정렬기준</option>
+						<option selected value="regDate">최신</option>
+						<option value="hitCount">조회수</option>
+						<option value="extra__sumReactionPoint">추천수</option>
+					</select>
+					<button class="btn active" type="submit">정렬</button>
 				</form>
 			</div>
 			<div class="table-box-type-1 overflow-x-auto mt-3">
@@ -66,16 +73,15 @@
 								<td>${article.forPrintType1RegDate }</td>
 								<td>${article.writer }</td>
 								<td>${article.hitCount }</td>
-                                <c:set var="reactionPoint" value="${article.goodReactionPoint - article.badReactionPoint }" />
 								<td>
-                                  <c:if test="${reactionPoint > 0 }">
-                                    <span class="text-green-600">${reactionPoint}</span>
+                                  <c:if test="${article.extra__sumReactionPoint > 0 }">
+                                    <span class="text-green-600">${article.extra__sumReactionPoint}</span>
                                   </c:if>
-                                  <c:if test="${reactionPoint == 0 }">
-                                    ${reactionPoint}
+                                  <c:if test="${article.extra__sumReactionPoint == 0 }">
+                                    ${article.extra__sumReactionPoint}
                                   </c:if>
-                                  <c:if test="${reactionPoint < 0 }">
-                                    <span class="text-red-600">${reactionPoint}</span>
+                                  <c:if test="${article.extra__sumReactionPoint < 0 }">
+                                    <span class="text-red-600">${article.extra__sumReactionPoint}</span>
                                   </c:if>
                                 </td>
 								<c:if test="${board.id == 2}">
