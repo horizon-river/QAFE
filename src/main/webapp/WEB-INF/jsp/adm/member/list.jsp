@@ -27,15 +27,16 @@
 				</select>
 
 
-				<input name="searchKeyword" type="text" class="ml-2 w-96 input input-borderd" placeholder="검색어를 입력해주세요"
+				<input name="searchKeyword" type="text" class="ml-2 w-96 input input-bordered" placeholder="검색어를 입력해주세요"
 					maxlength="20" value="${param.searchKeyword }"/>
-				<button type="submit" class="ml-2 btn btn-ghost">검색</button>
+				<button type="submit" class="btn accent">검색</button>
 			</form>
 		</div>
 		<div class="table-box-type-1 mt-3">
-			<table class="table table-fixed w-full">
+			<table class="table table-fixed w-full list">
 				<colgroup>
 					<col width="100" />
+					<col />
 					<col />
 					<col />
 					<col />
@@ -52,6 +53,7 @@
 						<th>아이디</th>
 						<th>이름</th>
 						<th>닉네임</th>
+						<th>회원상태</th>
 					</tr>
 				</thead>
 
@@ -65,6 +67,14 @@
 							<td>${member.loginId}</td>
 							<td>${member.name}</td>
 							<td>${member.nickname}</td>
+							<td>
+								<c:if test="${member.delStatus == true }">
+									<span class="text-red-600">탈퇴</span>
+								</c:if>
+								<c:if test="${member.delStatus == false }">
+									<span class="text-green-600">정상</span>
+								</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -72,8 +82,8 @@
 			</table>
 		</div>
 		
-		<div>
-			<button class="btn btn-error btn-delete-selected-members">선택삭제</button>
+		<div class="mt-3">
+			<button class="btn accent btn-delete-selected-members">선택삭제</button>
 		</div>
 
 		<form hidden method="POST" name="do-delete-members-form" action="../member/doDeleteMembers">
@@ -99,7 +109,7 @@
 					</c:if>
 				</c:if>
 				<c:forEach begin="${startPage }" end="${endPage }" var="i">
-					<a class="btn btn-sm ${page == i ? 'btn-active' : '' }" href="${pageBaseUri }&page=${i }">${i }</a>
+					<a class="btn btn-sm ${page == i ? 'active' : '' }" href="${pageBaseUri }&page=${i }">${i }</a>
 				</c:forEach>
 				<c:if test="${endPage < pagesCount}">
 					<c:if test="${endPage < pagesCount - 1}">

@@ -5,8 +5,9 @@
 
 	<section class="mt-8">
 		<div class="container mx-auto text-xl">
-			<form class="table-box-type-1" method="post" action="../member/doLogin">
+			<form class="table-box-type-1" method="post" action="../member/doLogin" onsubmit="MemberLogin__submit(this); return false;">
 			<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri }" />
+			<input type="hidden" name="loginPw" />
 				<table class="table w-full">
 					<tbody>
 						<tr>
@@ -25,7 +26,7 @@
 								<div class="form-control">
 								  <label class="input-group">
 								    <span class="bg-primary">비밀번호</span>
-								    <input name="loginPw" type="text" placeholder="비밀번호를 입력해주세요" class="input input-bordered w-full" />
+								    <input name="loginPwInput" type="text" placeholder="비밀번호를 입력해주세요" class="input input-bordered w-full" />
 								  </label>
 								</div>
 							</td>
@@ -51,5 +52,34 @@
 			</form>
 		</div>
 	</section>
-	
+<script>
+	let MemberLogin__submitDone = false;
+	function MemberLogin__submit(form) {
+		if (MemberLogin__submitDone) {
+			alert('처리중입니다.');
+			return;
+		}
+		
+		form.loginId.value = form.loginId.value.trim();
+		
+		if (form.loginId.value.length == 0) {
+			alert('아이디를 입력해주세요.');
+			form.loginId.focus();
+			return;
+		}
+		
+		form.loginPwInput.value = form.loginPwInput.value.trim();
+		
+		if (form.loginPwInput.value.length == 0) {
+			alert('비밀번호를 입력해주세요.');
+			form.loginPwInput.focus();
+			return;
+		}
+		
+		form.loginPw.value = sha256(form.loginPwInput.value);
+		form.loginPwInput.value = '';
+		MemberLogin__submitDone = true;
+		form.submit();
+	}
+</script>
 <%@ include file="../common/foot.jspf" %>

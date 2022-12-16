@@ -54,7 +54,7 @@ public class MemberService {
 		
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		int id = memberRepository.getLastInsertId();
-		return ResultData.from("S-1", "회원가입이 완료되었습니다.", "id", id);
+		return new ResultData("S-1", "회원가입이 완료되었습니다.", "id", id);
 	}
 	// 이메일로 회원정보 조회
 	public Member getMemberByEmail(String email) {
@@ -87,11 +87,11 @@ public class MemberService {
 	}
 
 	// 회원정보 수정
-	public ResultData modify(int id, String loginPw, String name, String nickname, 
+	public ResultData modify(int actorId, String loginPw, String name, String nickname, 
 			String cellphoneNum, String email) {
 		
 		// 회원 정보를 수정중인 회원 확인
-		Member member = memberRepository.getMemberById(id);
+		Member member = memberRepository.getMemberById(actorId);
 		
 		// 닉네임 중복체크
 		Member existsMember = getMemberByNickname(nickname);
@@ -109,10 +109,13 @@ public class MemberService {
 			return ResultData.from("F-2", "이미 사용중인 이메일입니다.");
 		}
 		
-		loginPw = Ut.sha256(loginPw);
+//		loginPw = Ut.sha256(loginPw); // 2중 암호화 방지로 인한 제거
 		
-		memberRepository.modify(id, loginPw, name, nickname, cellphoneNum, email);
-		
+		memberRepository.modify(actorId, loginPw, name, nickname, cellphoneNum, email);
+
+		if (loginPw != null) {
+			attrService.remove("member", actorId, "extra", "useTempPassword");
+		}
 		return ResultData.from("S-1", "회원정보가 수정되었습니다.");
 	}
 

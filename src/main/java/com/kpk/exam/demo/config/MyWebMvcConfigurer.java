@@ -1,14 +1,15 @@
 package com.kpk.exam.demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.kpk.exam.demo.interceptor.BeforeActionInterceptor;
 import com.kpk.exam.demo.interceptor.NeedAdminInterceptor;
-import com.kpk.exam.demo.interceptor.NeedAuthLevelInterceptor;
 import com.kpk.exam.demo.interceptor.NeedLoginInterceptor;
 import com.kpk.exam.demo.interceptor.NeedLogoutInterceptor;
 
@@ -29,6 +30,15 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	// NeedLogoutInterceptor 불러오기
 	@Autowired
 	NeedAdminInterceptor needAdminInterceptor;
+	
+	@Value("${custom.genFileDirPath}")
+	private String genFileDirPath;
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/gen/**").addResourceLocations("file:///" + genFileDirPath + "/")
+				.setCachePeriod(20);
+	}
 
 	// 인터셉터 적용
 	@Override

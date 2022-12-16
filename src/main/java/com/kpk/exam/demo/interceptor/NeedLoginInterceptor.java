@@ -24,7 +24,7 @@ public class NeedLoginInterceptor implements HandlerInterceptor{
 				resp.getWriter().append("{\"resultCode\":\"F-A\",\"msg\":\"로그인 후 이용해주세요.\"}");
 			} else {
 				String afterLoginUri = rq.getAfterLoginUri();
-				rq.printReplaceJs("로그인 후 이용해주세요.", "usr/member/login?afterLoginUri=" + afterLoginUri);
+				rq.printReplaceJs("로그인 후 이용해주세요.", "/usr/member/login?afterLoginUri=" + afterLoginUri);
 			}
 			return false;
 		}

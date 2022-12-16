@@ -1,6 +1,10 @@
 server:
   port: 8081
-spring:
+spring:  
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
   mail:
     host: smtp.gmail.com
     port: 587
@@ -26,6 +30,7 @@ spring:
 mybatis:
   type-aliases-package: com.kpk.exam.demo.vo
 custom:
+  genFileDirPath: C:\workspace_kpk\sts-4.15.2.RELEASE-workspace
   siteName: QAFE
   siteMainUri: http://localhost:8081
   emailFrom: no-reply@localhost

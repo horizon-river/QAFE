@@ -170,28 +170,33 @@ public class Rq {
 	
 	public String getLogoutUri() {
 		String requestUri = req.getRequestURI();
-		
-//		switch(requestUri) {
-//		case "/usr/article/write":
-//		case "/usr/article/modify":
-//			return "../member/doLogout?afterLogoutUri=" + "/";
-//		}
 
-		return "usr/member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+		return "/usr/member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
 	}
 	
 	public String getAfterLoginUri() {
 		String requestUri = req.getRequestURI();
-		// 로그아웃 후 다시 돌아가면 안되는 URL
+
+		// 로그인 후 다시 돌아가면 안되는 URL
 		switch (requestUri) {
-		case "/adm/member/list":
-			return Ut.getUriEncoded(Ut.getAttr(paramMap, "afterLoginUri", ""));
+		case "/usr/member/login":
+		case "/usr/member/join":
+		case "/usr/member/findLoginId":
+		case "/usr/member/findLoginPw":
+			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLoginUri", ""));
 		}
-		
+
 		return getEncodedCurrentUri();
 	}
 	
 	public String getAfterLogoutUri() {
+		String requestUri = req.getRequestURI();
+		// 로그아웃 후 다시 돌아가면 안되는 URL
+		switch (requestUri) {
+		case "/adm/member/list":
+			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLoginUri", ""));
+		}
+
 		return getEncodedCurrentUri();
 	}
 	
@@ -205,5 +210,21 @@ public class Rq {
 		}
 
 		return loginedMember.isAdmin();
+	}
+	
+	public String getProfileImgUri(int membeId) {
+		return "/common/genFile/file/member/" + membeId + "/extra/profileImg/1";
+	}
+
+	public String getProfileFallbackImgUri() {
+		return "https://via.placeholder.com/150/?text=*^_^*";
+	}
+
+	public String getProfileFallbackImgOnErrorHtml() {
+		return "this.src = '" + getProfileFallbackImgUri() + "'";
+	}
+	
+	public String getRemoveProfileImgIfNotExitOnErrorHtmlAttr() {
+		return "$(this).remove()";
 	}
 }

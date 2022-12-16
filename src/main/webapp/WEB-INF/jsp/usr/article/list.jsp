@@ -71,7 +71,16 @@
 									</c:if>
 								</td>
 								<td>${article.forPrintType1RegDate }</td>
-								<td>${article.writer }</td>
+								<td>
+									<div class="flex item-center justify-center mr-3">
+										<div class="avatar mr-3">
+											<div class="w-8 rounded-full">
+										    	<img src="${rq.getProfileImgUri(article.memberId)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt=""/>
+											</div>
+										</div>
+										${article.writer }
+									</div>
+								</td>
 								<td>${article.hitCount }</td>
 								<td>
                                   <c:if test="${article.extra__sumReactionPoint > 0 }">
@@ -106,12 +115,15 @@
 			</c:choose>
 			<div class="page-menu flex justify-center mt-3">
 				<div class="btn-group">
+				
 					<c:set var="pageMenuLen" value="6" />
 					<c:set var="startPage" value="${page - pageMenuLen >= 1 ? page - pageMenuLen : 1 }" />
 					<c:set var="endPage" value="${page + pageMenuLen <= pagesCount ? page + pageMenuLen : pagesCount }" />
+					
 					<c:set var="pageBaseUri" value="?boardId=${boardId }" />
 					<c:set var="pageBaseUri" value="${pageBaseUri }&searchKeywordTypeCode=${param.searchKeywordTypeCode}" />
 					<c:set var="pageBaseUri" value="${pageBaseUri }&searchKeyword=${param.searchKeyword}" />
+					
 					<c:if test="${startPage > 1 }">
 						<a class="btn btn-sm" href="${pageBaseUri }&page=1">1</a>
 						<c:if test="${startPage > 2 }">

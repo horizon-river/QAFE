@@ -97,8 +97,16 @@
 									<span class="badge active">채택됨</span>
 								</c:if></div>
 							<div class="mt-3 flex justify-between">
-								<div>
-									<span class="mr-3">${article.writer }</span>
+								<div class="flex" >
+									<div class="flex item-center justify-center mr-3">
+										<div class="avatar mr-3">
+											<div class="w-8 rounded-full">
+										    	<img src="${rq.getProfileImgUri(article.memberId)}" onerror="${rq.profileFallbackImgOnErrorHtml}" alt=""/>
+											</div>
+										</div>
+										${article.writer }
+									</div>
+									<span class="mr-3"> / </span>
 									<span>
 										<c:if test="${article.regDate != article.updateDate}">
 											${article.updateDate }

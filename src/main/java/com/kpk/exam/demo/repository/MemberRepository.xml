@@ -125,7 +125,6 @@
 		SELECT M.*
 		FROM `member` AS M
 		WHERE 1
-		AND delStatus = 0
 		<if test="authLevel != 0">
 			AND M.authLevel = #{authLevel}
 		</if>
