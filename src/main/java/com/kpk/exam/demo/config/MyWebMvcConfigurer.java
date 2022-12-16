@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.kpk.exam.demo.interceptor.BeforeActionInterceptor;
+import com.kpk.exam.demo.interceptor.NeedAdminInterceptor;
 import com.kpk.exam.demo.interceptor.NeedAuthLevelInterceptor;
 import com.kpk.exam.demo.interceptor.NeedLoginInterceptor;
 import com.kpk.exam.demo.interceptor.NeedLogoutInterceptor;
@@ -24,6 +25,10 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	// NeedLoginInterceptor 불러오기
 	@Autowired
 	NeedLogoutInterceptor needLogoutInterceptor;
+	
+	// NeedLogoutInterceptor 불러오기
+	@Autowired
+	NeedAdminInterceptor needAdminInterceptor;
 
 	// 인터셉터 적용
 	@Override
@@ -62,6 +67,13 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/answer/doModify");
 		ir.addPathPatterns("/usr/answer/doDelete");
 		ir.addPathPatterns("/usr/answer/doChoice");
+		ir.addPathPatterns("/adm/**");
+		ir.addPathPatterns("/adm/member/login");
+		ir.addPathPatterns("/adm/member/doLogin");
+		ir.addPathPatterns("/adm/member/findLoginId");
+		ir.addPathPatterns("/adm/member/doFindLoginId");
+		ir.addPathPatterns("/adm/member/findLoginPw");
+		ir.addPathPatterns("/adm/member/doFindLoginPw");
 		
 		// 로그아웃이 필요한 URI
 		ir = registry.addInterceptor(needLogoutInterceptor);
@@ -74,6 +86,16 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/member/doFindLoginId");
 		ir.addPathPatterns("/usr/member/findLoginPw");
 		ir.addPathPatterns("/usr/member/doFindLoginPw");
+		
+		// 관리자만 접근 가능한 URI
+		ir = registry.addInterceptor(needAdminInterceptor);
+		ir.addPathPatterns("/adm/**");
+		ir.addPathPatterns("/adm/member/login");
+		ir.addPathPatterns("/adm/member/doLogin");
+		ir.addPathPatterns("/adm/member/findLoginId");
+		ir.addPathPatterns("/adm/member/doFindLoginId");
+		ir.addPathPatterns("/adm/member/findLoginPw");
+		ir.addPathPatterns("/adm/member/doFindLoginPw");
 	}
 	
 }

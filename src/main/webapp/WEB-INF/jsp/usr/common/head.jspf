@@ -61,7 +61,7 @@
 				</li>
 				<c:if test="${rq.loginedMember.isAdmin()}">
 					<li class="mt-3 flex">
-						<a class="px-3 py-2 flex-grow"  href="/usr/admin/home">
+						<a class="px-3 py-2 flex-grow"  href="/adm/member/list">
 							<span>ADMIN</span>
 						</a>
 					</li>

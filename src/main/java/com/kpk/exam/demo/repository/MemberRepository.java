@@ -28,7 +28,9 @@ public interface MemberRepository {
 
 	public void modify(int id, String loginPw, String name, String nickname, String cellphoneNum, String email);
 
-	public int getMembersCount();
+	public int getMembersCount(String authLevel, String searchKeywordTypeCode, String searchKeyword);
 
-	public List<Member> getForPrintMembers(int limitStart, int limitTake);
+	public List<Member> getForPrintMembers(String authLevel, String searchKeywordTypeCode, String searchKeyword, int limitStart, int limitTake);
+
+	public void deleteMember(int id);
 }

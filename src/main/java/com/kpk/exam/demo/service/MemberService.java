@@ -161,17 +161,29 @@ public class MemberService {
 		memberRepository.modify(actor.getId(), Ut.sha256(tempPassword), null, null, null, null);
 	}
 
-	public int getMembersCount() {
-		return memberRepository.getMembersCount();
+	public int getMembersCount(String authLevel, String searchKeywordTypeCode, String searchKeyword) {
+		return memberRepository.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
 	}
 
-	public List<Member> getForPrintMembers(int itemsInAPage, int page) {
+	public List<Member> getForPrintMembers(String authLevel, String searchKeywordTypeCode, String searchKeyword, int itemsInAPage, int page) {
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
-		
-		List<Member> members = memberRepository.getForPrintMembers(limitStart, limitTake);
-		
+		List<Member> members = memberRepository.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,limitStart, limitTake);
+
 		return members;
+	}
+	public void deleteMembers(List<Integer> memberIds) {
+		for (int memberId : memberIds) {
+			Member member = getMemberById(memberId);
+
+			if (member != null) {
+				deleteMember(member);
+			}
+		}
+	}
+	
+	private void deleteMember(Member member) {
+		memberRepository.deleteMember(member.getId());
 	}
 	
 }
