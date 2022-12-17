@@ -83,10 +83,16 @@
 		</div>
 		
 		<div class="mt-3">
-			<button class="btn accent btn-delete-selected-members">선택삭제</button>
+			<button class="btn accent btn-delete-selected-members">탈퇴처리</button>
+			<button class="btn active btn-recovery-selected-members">복구</button>
 		</div>
 
 		<form hidden method="POST" name="do-delete-members-form" action="../member/doDeleteMembers">
+			<input type="hidden" name="ids" value="" />
+			<input type="hidden" name="replaceUri" value="${rq.currentUri}" />
+		</form>
+		
+		<form hidden method="POST" name="do-recovery-members-form" action="../member/doRecoveryMembers">
 			<input type="hidden" name="ids" value="" />
 			<input type="hidden" name="replaceUri" value="${rq.currentUri}" />
 		</form>
@@ -139,15 +145,34 @@
 <script>
 	$('.btn-delete-selected-members').click(function() {
 		const values = $('.checkbox-member-id:checked').map((index, el) => el.value).toArray();
+		
 		if ( values.length == 0 ) {
 	 		alert('삭제할 회원을 선택 해주세요.');
 	 		return;
 		}
+		
 		if ( confirm('정말 삭제하시겠습니까?') == false ) {
   			return;
 		}
+		
 		document['do-delete-members-form'].ids.value = values.join(',');
 		document['do-delete-members-form'].submit();
+	});
+	
+	$('.btn-recovery-selected-members').click(function(){
+		const values = $('.checkbox-member-id:checked').map((index, el) => el.value).toArray();
+		
+		if ( values.length == 0 ) {
+	 		alert('복구할 회원을 선택 해주세요.');
+	 		return;
+		}
+		
+		if ( confirm('정말 복구하시겠습니까?') == false ) {
+  			return;
+		}
+		
+		document['do-recovery-members-form'].ids.value = values.join(',');
+		document['do-recovery-members-form'].submit();
 	});
 </script>
 <%@ include file="../common/foot.jspf"%>

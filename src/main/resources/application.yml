@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 spring:  
   servlet:
     multipart:
@@ -30,7 +30,7 @@ spring:
 mybatis:
   type-aliases-package: com.kpk.exam.demo.vo
 custom:
-  genFileDirPath: C:\workspace_kpk\sts-4.15.2.RELEASE-workspace
+  genFileDirPath: C:\workspace-kpk\sts-4.15.2.RELEASE-workspace
   siteName: QAFE
   siteMainUri: http://localhost:8081
   emailFrom: no-reply@localhost

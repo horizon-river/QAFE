@@ -175,6 +175,7 @@ public class MemberService {
 
 		return members;
 	}
+	
 	public void deleteMembers(List<Integer> memberIds) {
 		for (int memberId : memberIds) {
 			Member member = getMemberById(memberId);
@@ -185,8 +186,22 @@ public class MemberService {
 		}
 	}
 	
-	private void deleteMember(Member member) {
+	public void deleteMember(Member member) {
 		memberRepository.deleteMember(member.getId());
+	}
+	
+	public void recoveryMembers(List<Integer> memberIds) {
+		for (int memberId : memberIds) {
+			Member member = getMemberById(memberId);
+
+			if (member != null) {
+				recoveryMember(member);
+			}
+		}
+	}
+	
+	private void recoveryMember(Member member) {
+		memberRepository.recoveryMember(member.getId());
 	}
 	
 }

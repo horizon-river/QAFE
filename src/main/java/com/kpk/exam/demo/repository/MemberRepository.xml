@@ -154,12 +154,23 @@
 		</if>
 	</select>
 	
+	<!-- 회원 삭제 처리 -->
 	<update id="deleteMember">
 		UPDATE `member`
 		<set>
 			updateDate = NOW(),
 			delStatus = 1,
 			delDate = NOW(),
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="recoveryMember">
+		UPDATE `member`
+		<set>
+			updateDate = NOW(),
+			delStatus = 0,
+			delDate = null,
 		</set>
 		WHERE id = #{id}
 	</update>

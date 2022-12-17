@@ -63,5 +63,20 @@ public class AdmMemberController {
 
 		return Ut.jsReplace("해당 회원들이 삭제되었습니다.", replaceUri);
 	}
+	
+	@RequestMapping("/adm/member/doRecoveryMembers")
+	@ResponseBody
+	public String doRecoveryMembers(@RequestParam(defaultValue = "") String ids,
+			@RequestParam(defaultValue = "/adm/member/list") String replaceUri) {
+		List<Integer> memberIds = new ArrayList<>();
+
+		for (String idStr : ids.split(",")) {
+			memberIds.add(Integer.parseInt(idStr));
+		}
+
+		memberService.recoveryMembers(memberIds);
+
+		return Ut.jsReplace("해당 회원들이 복구되었습니다.", replaceUri);
+	}
 
 }

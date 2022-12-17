@@ -270,6 +270,19 @@ public class UsrMemberController {
 		
 	}
 	
+	// 회원 삭제 처리
+	@RequestMapping("usr/member/doDelete")
+	@ResponseBody
+	public String doDelete() {		
+		Member member = memberService.getMemberById(rq.getLoginedMemberId());
+		
+		memberService.deleteMember(member);
+		
+		rq.logout();
+		
+		return rq.jsReplace("탈퇴 처리 완료 됐습니다.", "/");	
+	}
+	
 	// 중복 아이디 체크
 	@RequestMapping("usr/member/getLoginIdDup")
 	@ResponseBody

@@ -111,6 +111,12 @@
 							<a href="../member/checkPassword?replaceUri=${Ut.getUriEncoded('../member/modify') }" class="btn accent">회원정보수정</a>
 						</td>
 					</tr>
+					<tr>
+						<td>
+							<a href="../member/checkPassword?replaceUri=${Ut.getUriEncoded('../member/doDelete') }" class="btn accent" 
+							onclick="return confirm('작성하신 게시물, 댓글, 답변은 자동으로 삭제되지 않습니다.\n정말로 탈퇴하시겠습니까?')">회원탈퇴</a>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

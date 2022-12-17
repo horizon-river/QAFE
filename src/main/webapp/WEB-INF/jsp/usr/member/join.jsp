@@ -19,7 +19,8 @@
 								<div class="form-control">
 								  <label class="input-group">
 								    <span class="bg-primary">아이디</span>
-								    <input name="loginId" type="text" onkeyup="debouncedCheckLoginIdDup(this);" placeholder="아이디를 입력해주세요" class="input input-bordered w-full" autocomplete="off"/>
+								    <input name="loginId" type="text" onkeyup="debouncedCheckLoginIdDup(this);" 
+								    placeholder="아이디를 입력해주세요" class="input input-bordered w-full" autocomplete="off"/>
 								  </label>
 								</div>								
 								<div class="loginId-msg"></div>
